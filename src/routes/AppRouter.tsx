@@ -20,6 +20,13 @@ import PricingFactors from "../pages/pricing-factors";
 import PricingExperiments from "../pages/pricing-experiments";
 import PricingSimulation from "../pages/pricing-simulation";
 import PricingVersioning from "../pages/pricing-versioning";
+import PortfolioKPIsScreen from "../pages/reporting-kpis";
+import ClaimsAnalyticsScreen from "../pages/reporting-claims";
+import SalesFunnelScreen from "../pages/reporting-sales";
+import CustomerAnalyticsScreen from "../pages/reporting-customers";
+import OperationalReportsScreen from "../pages/reporting-operational";
+import RegulatoryReportsScreen from "../pages/reporting-regulatory";
+import DataExportsScreen from "../pages/reporting-exports";
 
 export default function AppRouter() {
   return (
@@ -45,6 +52,22 @@ export default function AppRouter() {
         <Route path="/pricing/experiments" element={<PricingExperiments />} />
         <Route path="/pricing/simulation" element={<PricingSimulation />} />
         <Route path="/pricing/versioning" element={<PricingVersioning />} />
+        <Route path="/reporting/kpis" element={<PortfolioKPIsScreen />} />
+        <Route path="/reporting/claims" element={<ClaimsAnalyticsScreen />} />
+        <Route path="/reporting/sales" element={<SalesFunnelScreen />} />
+        <Route
+          path="/reporting/customers"
+          element={<CustomerAnalyticsScreen />}
+        />
+        <Route
+          path="/reporting/operational"
+          element={<OperationalReportsScreen />}
+        />
+        <Route
+          path="/reporting/regulatory"
+          element={<RegulatoryReportsScreen />}
+        />
+        <Route path="/reporting/exports" element={<DataExportsScreen />} />
       </Routes>
     </BrowserRouter>
   );
