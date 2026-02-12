@@ -43,5 +43,4 @@ import KYCReportsScreen from "../pages/reports";
     </BrowserRouter>
   );
 }
-
-
+//
