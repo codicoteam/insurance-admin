@@ -15,8 +15,21 @@ import VerificationQueue from "../pages/verification";
 import ManualReviewScreen from "../pages/manualreview";
 import Rules from "../pages/rules";
 import KYCReportsScreen from "../pages/reports";
+import PortfolioKPIsScreen from "../pages/reporting-kpis";
+import ClaimsAnalyticsScreen from "../pages/reporting-claims";
+import SalesFunnelScreen from "../pages/reporting-sales";
+import CustomerAnalyticsScreen from "../pages/reporting-customers";
+import OperationalReportsScreen from "../pages/reporting-operational";
+import RegulatoryReportsScreen from "../pages/reporting-regulatory";
+import DataExportsScreen from "../pages/reporting-exports";
+import SystemStatusScreen from "../pages/system-status";
+import SystemJobsScreen from "../pages/system-jobs";
+import SystemLogsScreen from "../pages/system-logs";
+import SystemBackupsScreen from "../pages/system-backups";
+import SystemReleasesScreen from "../pages/system-releases";
+import SystemConfigScreen from "../pages/system-config";
 
- export default function AppRouter () {
+export default function AppRouter () {
 
   return (
     <BrowserRouter>
@@ -33,15 +46,23 @@ import KYCReportsScreen from "../pages/reports";
         <Route path="/users/reviews" element={<AccessReviewScreen/>} />
         <Route path="/users/audit" element={<AuditTrailScreen/>} />
         <Route path="/kyc/queue" element={<VerificationQueue/>} />
-         <Route path="/kyc/review" element={<ManualReviewScreen/>} />
-         <Route path="/kyc/rules" element={<Rules/>} />
-         <Route path="/kyc/reports" element={<KYCReportsScreen/>} />
-        
-        
-        
+        <Route path="/kyc/review" element={<ManualReviewScreen/>} />
+        <Route path="/kyc/rules" element={<Rules/>} />
+        <Route path="/kyc/reports" element={<KYCReportsScreen/>} />
+        <Route path="/reporting/kpis" element={<PortfolioKPIsScreen/>} />
+        <Route path="/reporting/claims" element={<ClaimsAnalyticsScreen/>} />
+        <Route path="/reporting/sales" element={<SalesFunnelScreen/>} />
+        <Route path="/reporting/customers" element={<CustomerAnalyticsScreen/>} />
+        <Route path="/reporting/operational" element={<OperationalReportsScreen/>} />
+        <Route path="/reporting/regulatory" element={<RegulatoryReportsScreen/>} />
+        <Route path="/reporting/exports" element={<DataExportsScreen/>} />
+        <Route path="/system/status" element={<SystemStatusScreen/>} />
+        <Route path="/system/jobs" element={<SystemJobsScreen/>} />
+        <Route path="/system/logs" element={<SystemLogsScreen/>} />
+        <Route path="/system/backups" element={<SystemBackupsScreen/>} />
+        <Route path="/system/releases" element={<SystemReleasesScreen/>} />
+        <Route path="/system/config" element={<SystemConfigScreen/>} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-
