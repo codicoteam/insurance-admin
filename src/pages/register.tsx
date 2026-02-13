@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Shield, User, Mail, Lock, Phone, Eye, EyeOff, 
-  ArrowRight, CheckCircle, AlertCircle, Briefcase,
-  Home, Heart, Calendar, Users, Award, ChevronRight
-} from 'lucide-react';
+import { Shield, User, Mail, Lock, Phone, Eye, EyeOff, ArrowRight, CheckCircle, Award, AlertCircle, ChevronRight } from 'lucide-react';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);

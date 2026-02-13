@@ -6,8 +6,6 @@ import AlertsTasksScreen from "../pages/Alerts & Tasks";
 import UsersScreen from "../pages/users";
 import AdminQuotes from "../pages/Quotes";
 import PolicyAdminScreen from "../pages/policysearch";
-import AdminPaymentScreen from "../pages/payment";
-import ClaimManagementScreen from "../pages/claims";
 import RolesPermissionsManager from "../pages/roles & permision";
 import AccessReviewScreen from "../pages/access review";
 import AuditTrailScreen from "../pages/audit trail";
@@ -15,14 +13,6 @@ import VerificationQueue from "../pages/verification";
 import ManualReviewScreen from "../pages/manualreview";
 import Rules from "../pages/rules";
 import KYCReportsScreen from "../pages/reports";
-import WelcomeScreen from "../pages/welcome";
-import Layout from "../pages/welcomelayout";
-import About from "../features/welcome/about";
-import Services from "../features/welcome/services";
-import Home from "../features/welcome/home";
-import Contact from "../features/welcome/contact";
-import Register from "../pages/register";
-import Login from "../pages/login";
 import PortfolioKPIsScreen from "../pages/reporting-kpis";
 import ClaimsAnalyticsScreen from "../pages/reporting-claims";
 import SalesFunnelScreen from "../pages/reporting-sales";
@@ -36,21 +26,38 @@ import SystemLogsScreen from "../pages/system-logs";
 import SystemBackupsScreen from "../pages/system-backups";
 import SystemReleasesScreen from "../pages/system-releases";
 import SystemConfigScreen from "../pages/system-config";
+import FNOLIntakeScreen from "../pages/claims-fnol";
+import ClaimsQueuesScreen from "../pages/claims-queues";
+import ClaimsAssignmentsScreen from "../pages/claims-assignments";
+import ClaimsPaymentsScreen from "../pages/claims-payments";
+import ClaimsReportScreen from "../pages/claims-report";
+import ClaimsWorkbenchesScreen from "../pages/claims-workbenches";
+import ProviderCoordinationScreen from "../pages/claims-providers";
+import RecoveriesSubrogationScreen from "../pages/claims-recoveries";
+import QualityLeakageScreen from "../pages/claims-quality";
 
 export default function AppRouter() {
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ExecutiveOverview />} />
-        <Route path="/dashboard/executive" element={<ExecutiveOverview />} />
         <Route path="/dashboard/operational" element={<Dashboard />} />
         <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
         <Route path="/users" element={<UsersScreen />} />
         <Route path="/quotes/monitor" element={<AdminQuotes />} />
         <Route path="/policies/search" element={<PolicyAdminScreen />} />
-        <Route path="/claims/payments" element={<AdminPaymentScreen />} />
-        <Route path="/claims/reports" element={<ClaimManagementScreen />} />
+
+        {/* Claims Routes */}
+        <Route path="/claims/fnol" element={<FNOLIntakeScreen />} />
+        <Route path="/claims/queues" element={<ClaimsQueuesScreen />} />
+        <Route path="/claims/assignments" element={<ClaimsAssignmentsScreen />} />
+        <Route path="/claims/workbenches" element={<ClaimsWorkbenchesScreen />} />
+        <Route path="/claims/providers" element={<ProviderCoordinationScreen />} />
+        <Route path="/claims/payments" element={<ClaimsPaymentsScreen />} />
+        <Route path="/claims/recoveries" element={<RecoveriesSubrogationScreen />} />
+        <Route path="/claims/quality" element={<QualityLeakageScreen />} />
+        <Route path="/claims/reports" element={<ClaimsReportScreen />} />
+
         <Route path="/users/roles" element={<RolesPermissionsManager />} />
         <Route path="/users/reviews" element={<AccessReviewScreen />} />
         <Route path="/users/audit" element={<AuditTrailScreen />} />
@@ -58,9 +65,6 @@ export default function AppRouter() {
         <Route path="/kyc/review" element={<ManualReviewScreen />} />
         <Route path="/kyc/rules" element={<Rules />} />
         <Route path="/kyc/reports" element={<KYCReportsScreen />} />
-        <Route path="/uyuyu" element={<WelcomeScreen />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/reporting/kpis" element={<PortfolioKPIsScreen />} />
         <Route path="/reporting/claims" element={<ClaimsAnalyticsScreen />} />
         <Route path="/reporting/sales" element={<SalesFunnelScreen />} />
@@ -75,18 +79,6 @@ export default function AppRouter() {
         <Route path="/system/releases" element={<SystemReleasesScreen />} />
         <Route path="/system/config" element={<SystemConfigScreen />} />
       </Routes>
-
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
-  );
-
     </BrowserRouter>
   );
 }

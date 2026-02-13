@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { 
-  Shield, Mail, Lock, Eye, EyeOff, ArrowRight, 
-  Facebook, Twitter, Linkedin, Github, CheckCircle,
-  AlertCircle, Briefcase, Users, Award
-} from 'lucide-react';
+import { Shield, Mail, Lock, Eye, EyeOff, ArrowRight, Facebook, Twitter, Linkedin, Github, AlertCircle } from 'lucide-react';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
