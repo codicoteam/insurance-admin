@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { 
-  Home, Users, Shield, Package, DollarSign, FileText, 
-  ClipboardList, FileCheck, AlertTriangle, 
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import {
+  Home,
+  Users,
+  Shield,
+  Package,
+  DollarSign,
+  FileText,
+  ClipboardList,
+  FileCheck,
+  AlertTriangle,
   BarChart3,
-  Activity, ChevronDown,
-  ChevronRight, X
-} from 'lucide-react';
+  Activity,
+  ChevronDown,
+  ChevronRight,
+  X,
+} from "lucide-react";
 
 interface MenuItem {
   id: string;
@@ -30,157 +39,298 @@ interface InsuranceSidebarProps {
   onClose?: () => void;
 }
 
-const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({ isOpen = false, onClose }) => {
-  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({ home: true });
+const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
+  isOpen = false,
+  onClose,
+}) => {
+  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
+    home: true,
+  });
 
   const toggleSection = (sectionId: string): void => {
-    setExpandedSections(prev => ({
+    setExpandedSections((prev) => ({
       ...prev,
-      [sectionId]: !prev[sectionId]
+      [sectionId]: !prev[sectionId],
     }));
   };
 
   const menuItems: MenuSection[] = [
     {
-      id: 'home',
-      label: 'Home & Dashboards',
+      id: "home",
+      label: "Home & Dashboards",
       icon: Home,
       children: [
-        { id: 'executive-overview', label: 'Executive Overview', path: '/' },
-        { id: 'operational', label: 'Operational Dashboards', path: '/dashboard/operational' },
-        { id: 'alerts', label: 'Alerts & Tasks', path: '/dashboard/alerts' }
-      ]
+        { id: "executive-overview", label: "Executive Overview", path: "/" },
+        {
+          id: "operational",
+          label: "Operational Dashboards",
+          path: "/dashboard/operational",
+        },
+        { id: "alerts", label: "Alerts & Tasks", path: "/dashboard/alerts" },
+      ],
     },
     {
-      id: 'users',
-      label: 'Users & Access',
+      id: "users",
+      label: "Users & Access",
       icon: Users,
       children: [
-        { id: 'users-list', label: 'Users', path: '/users' },
-        { id: 'roles', label: 'Roles & Permissions', path: '/users/roles' },
-        { id: 'access-reviews', label: 'Access Reviews', path: '/users/reviews' },
-        { id: 'audit-trail', label: 'Audit Trail', path: '/users/audit' }
-      ]
+        { id: "users-list", label: "Users", path: "/users" },
+        { id: "roles", label: "Roles & Permissions", path: "/users/roles" },
+        {
+          id: "access-reviews",
+          label: "Access Reviews",
+          path: "/users/reviews",
+        },
+        { id: "audit-trail", label: "Audit Trail", path: "/users/audit" },
+      ],
     },
     {
-      id: 'kyc',
-      label: 'KYC / AML Console',
+      id: "kyc",
+      label: "KYC / AML Console",
       icon: Shield,
       children: [
-        { id: 'verification-queue', label: 'Verification Queue', path: '/kyc/queue' },
-        { id: 'manual-review', label: 'Manual Review', path: '/kyc/review' },
-        { id: 'lists-rules', label: 'Lists & Rules', path: '/kyc/rules' },
-        { id: 'kyc-reports', label: 'KYC Reports', path: '/kyc/reports' }
-      ]
+        {
+          id: "verification-queue",
+          label: "Verification Queue",
+          path: "/kyc/queue",
+        },
+        { id: "manual-review", label: "Manual Review", path: "/kyc/review" },
+        { id: "lists-rules", label: "Lists & Rules", path: "/kyc/rules" },
+        { id: "kyc-reports", label: "KYC Reports", path: "/kyc/reports" },
+      ],
     },
     {
-      id: 'products',
-      label: 'Product Catalog',
+      id: "products",
+      label: "Product Catalog",
       icon: Package,
       children: [
-        { id: 'products-versions', label: 'Products & Versions', path: '/products' },
-        { id: 'coverages', label: 'Coverages & Riders', path: '/products/coverages' },
-        { id: 'forms', label: 'Forms & Disclosures', path: '/products/forms' },
-        { id: 'doc-templates', label: 'Document Templates', path: '/products/templates' },
-        { id: 'availability', label: 'Availability', path: '/products/availability' }
-      ]
+        {
+          id: "products-versions",
+          label: "Products & Versions",
+          path: "/products",
+        },
+        {
+          id: "coverages",
+          label: "Coverages & Riders",
+          path: "/products/coverages",
+        },
+        { id: "forms", label: "Forms & Disclosures", path: "/products/forms" },
+        {
+          id: "doc-templates",
+          label: "Document Templates",
+          path: "/products/templates",
+        },
+        {
+          id: "availability",
+          label: "Availability",
+          path: "/products/availability",
+        },
+      ],
     },
     {
-      id: 'pricing',
-      label: 'Pricing & Rating',
+      id: "pricing",
+      label: "Pricing & Rating",
       icon: DollarSign,
       children: [
-        { id: 'rate-tables', label: 'Rate Tables', path: '/pricing/rates' },
-        { id: 'rating-factors', label: 'Rating Factors', path: '/pricing/factors' },
-        { id: 'experiments', label: 'Experiments', path: '/pricing/experiments' },
-        { id: 'simulation', label: 'Simulation', path: '/pricing/simulation' },
-        { id: 'versioning', label: 'Versioning & Approvals', path: '/pricing/versions' }
-      ]
+        { id: "rate-tables", label: "Rate Tables", path: "/pricing/rates" },
+        {
+          id: "rating-factors",
+          label: "Rating Factors",
+          path: "/pricing/factors",
+        },
+        {
+          id: "experiments",
+          label: "Experiments",
+          path: "/pricing/experiments",
+        },
+        { id: "simulation", label: "Simulation", path: "/pricing/simulation" },
+        {
+          id: "versioning",
+          label: "Versioning & Approvals",
+          path: "/pricing/versioning",
+        },
+      ],
     },
     {
-      id: 'underwriting',
-      label: 'Underwriting',
+      id: "underwriting",
+      label: "Underwriting",
       icon: FileText,
       children: [
-        { id: 'rules-engine', label: 'Rules Engine', path: '/underwriting/rules' },
-        { id: 'referrals', label: 'Referrals Queue', path: '/underwriting/referrals' },
-        { id: 'guidelines', label: 'Guidelines & Authority', path: '/underwriting/guidelines' },
-        { id: 'uw-templates', label: 'Templates', path: '/underwriting/templates' },
-        { id: 'uw-reports', label: 'UW Reports', path: '/underwriting/reports' }
-      ]
+        {
+          id: "rules-engine",
+          label: "Rules Engine",
+          path: "/underwriting/rules",
+        },
+        {
+          id: "referrals",
+          label: "Referrals Queue",
+          path: "/underwriting/referrals",
+        },
+        {
+          id: "guidelines",
+          label: "Guidelines & Authority",
+          path: "/underwriting/guidelines",
+        },
+        {
+          id: "uw-templates",
+          label: "Templates",
+          path: "/underwriting/templates",
+        },
+        {
+          id: "uw-reports",
+          label: "UW Reports",
+          path: "/underwriting/reports",
+        },
+      ],
     },
     {
-      id: 'quotes',
-      label: 'Quotes & Pipeline',
+      id: "quotes",
+      label: "Quotes & Pipeline",
       icon: ClipboardList,
       children: [
-        { id: 'quotes-monitor', label: 'Quotes Monitor', path: '/quotes/monitor' },
-        { id: 'lead-sources', label: 'Lead Sources', path: '/quotes/sources' },
-        { id: 'recovery', label: 'Recovery Journeys', path: '/quotes/recovery' }
-      ]
+        {
+          id: "quotes-monitor",
+          label: "Quotes Monitor",
+          path: "/quotes/monitor",
+        },
+        { id: "lead-sources", label: "Lead Sources", path: "/quotes/sources" },
+        {
+          id: "recovery",
+          label: "Recovery Journeys",
+          path: "/quotes/recovery",
+        },
+      ],
     },
     {
-      id: 'policies',
-      label: 'Policies',
+      id: "policies",
+      label: "Policies",
       icon: FileCheck,
       children: [
-        { id: 'policy-search', label: 'Policy Search', path: '/policies/search' },
-        { id: 'policy-details', label: 'Details & Timeline', path: '/policies/details' },
-        { id: 'policy-actions', label: 'Actions', path: '/policies/actions' },
-        { id: 'beneficiaries', label: 'Beneficiaries/Dependents', path: '/policies/beneficiaries' },
-        { id: 'assets', label: 'Assets', path: '/policies/assets' },
-        { id: 'policy-docs', label: 'Documents', path: '/policies/documents' }
-      ]
+        {
+          id: "policy-search",
+          label: "Policy Search",
+          path: "/policies/search",
+        },
+        {
+          id: "policy-details",
+          label: "Details & Timeline",
+          path: "/policies/details",
+        },
+        { id: "policy-actions", label: "Actions", path: "/policies/actions" },
+        {
+          id: "beneficiaries",
+          label: "Beneficiaries/Dependents",
+          path: "/policies/beneficiaries",
+        },
+        { id: "assets", label: "Assets", path: "/policies/assets" },
+        { id: "policy-docs", label: "Documents", path: "/policies/documents" },
+      ],
     },
     {
-      id: 'claims',
-      label: 'Claims',
+      id: "claims",
+      label: "Claims",
       icon: AlertTriangle,
       children: [
-        { id: 'fnol', label: 'FNOL Intake', path: '/claims/fnol' },
-        { id: 'queues', label: 'Queues', path: '/claims/queues' },
-        { id: 'assignments', label: 'Assignments', path: '/claims/assignments' },
-        { id: 'workbenches', label: 'Workbenches', path: '/claims/workbenches' },
-        { id: 'provider-coord', label: 'Provider Coordination', path: '/claims/providers' },
-        { id: 'claim-payments', label: 'Payments', path: '/claims/payments' },
-        { id: 'recoveries', label: 'Recoveries/Subrogation', path: '/claims/recoveries' },
-        { id: 'quality', label: 'Quality & Leakage', path: '/claims/quality' },
-        { id: 'claim-reports', label: 'Claim Reports', path: '/claims/reports' }
-      ]
+        { id: "fnol", label: "FNOL Intake", path: "/claims/fnol" },
+        { id: "queues", label: "Queues", path: "/claims/queues" },
+        {
+          id: "assignments",
+          label: "Assignments",
+          path: "/claims/assignments",
+        },
+        {
+          id: "workbenches",
+          label: "Workbenches",
+          path: "/claims/workbenches",
+        },
+        {
+          id: "provider-coord",
+          label: "Provider Coordination",
+          path: "/claims/providers",
+        },
+        { id: "claim-payments", label: "Payments", path: "/claims/payments" },
+        {
+          id: "recoveries",
+          label: "Recoveries/Subrogation",
+          path: "/claims/recoveries",
+        },
+        { id: "quality", label: "Quality & Leakage", path: "/claims/quality" },
+        {
+          id: "claim-reports",
+          label: "Claim Reports",
+          path: "/claims/reports",
+        },
+      ],
     },
     {
-      id: 'reporting',
-      label: 'Reporting & Analytics',
+      id: "reporting",
+      label: "Reporting & Analytics",
       icon: BarChart3,
       children: [
-        { id: 'portfolio-kpis', label: 'Portfolio KPIs', path: '/reporting/kpis' },
-        { id: 'claims-analytics', label: 'Claims Analytics', path: '/reporting/claims' },
-        { id: 'sales-funnel', label: 'Sales & Funnel', path: '/reporting/sales' },
-        { id: 'customer-analytics', label: 'Customer Analytics', path: '/reporting/customers' },
-        { id: 'operational-reports', label: 'Operational', path: '/reporting/operational' },
-        { id: 'regulatory', label: 'Regulatory', path: '/reporting/regulatory' },
-        { id: 'data-exports', label: 'Data Exports', path: '/reporting/exports' }
-      ]
+        {
+          id: "portfolio-kpis",
+          label: "Portfolio KPIs",
+          path: "/reporting/kpis",
+        },
+        {
+          id: "claims-analytics",
+          label: "Claims Analytics",
+          path: "/reporting/claims",
+        },
+        {
+          id: "sales-funnel",
+          label: "Sales & Funnel",
+          path: "/reporting/sales",
+        },
+        {
+          id: "customer-analytics",
+          label: "Customer Analytics",
+          path: "/reporting/customers",
+        },
+        {
+          id: "operational-reports",
+          label: "Operational",
+          path: "/reporting/operational",
+        },
+        {
+          id: "regulatory",
+          label: "Regulatory",
+          path: "/reporting/regulatory",
+        },
+        {
+          id: "data-exports",
+          label: "Data Exports",
+          path: "/reporting/exports",
+        },
+      ],
     },
     {
-      id: 'system',
-      label: 'System Health & Ops',
+      id: "system",
+      label: "System Health & Ops",
       icon: Activity,
       children: [
-        { id: 'status', label: 'Status', path: '/system/status' },
-        { id: 'jobs', label: 'Jobs & Queues', path: '/system/jobs' },
-        { id: 'logs-traces', label: 'Logs & Traces', path: '/system/logs' },
-        { id: 'backups', label: 'Backups & DR', path: '/system/backups' },
-        { id: 'releases', label: 'Release Management', path: '/system/releases' },
-        { id: 'env-config', label: 'Environment Config', path: '/system/config' }
-      ]
-    }
+        { id: "status", label: "Status", path: "/system/status" },
+        { id: "jobs", label: "Jobs & Queues", path: "/system/jobs" },
+        { id: "logs-traces", label: "Logs & Traces", path: "/system/logs" },
+        { id: "backups", label: "Backups & DR", path: "/system/backups" },
+        {
+          id: "releases",
+          label: "Release Management",
+          path: "/system/releases",
+        },
+        {
+          id: "env-config",
+          label: "Environment Config",
+          path: "/system/config",
+        },
+      ],
+    },
   ];
 
   return (
     <div
       className={`w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed lg:sticky top-0 h-screen transition-transform duration-200 ease-out ${
-        isOpen ? 'translate-x-0 z-50' : '-translate-x-full lg:translate-x-0'
+        isOpen ? "translate-x-0 z-50" : "-translate-x-full lg:translate-x-0"
       }`}
     >
       {/* Header */}
@@ -241,8 +391,8 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({ isOpen = false, onC
                       className={({ isActive }) =>
                         `block px-3 py-2 text-sm rounded-lg transition-colors ${
                           isActive
-                            ? 'bg-blue-50 text-blue-700 font-medium'
-                            : 'text-gray-600 hover:bg-gray-50'
+                            ? "bg-blue-50 text-blue-700 font-medium"
+                            : "text-gray-600 hover:bg-gray-50"
                         }`
                       }
                     >
