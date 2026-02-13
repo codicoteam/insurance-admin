@@ -50,11 +50,23 @@ export default function AppRouter() {
         {/* Claims Routes */}
         <Route path="/claims/fnol" element={<FNOLIntakeScreen />} />
         <Route path="/claims/queues" element={<ClaimsQueuesScreen />} />
-        <Route path="/claims/assignments" element={<ClaimsAssignmentsScreen />} />
-        <Route path="/claims/workbenches" element={<ClaimsWorkbenchesScreen />} />
-        <Route path="/claims/providers" element={<ProviderCoordinationScreen />} />
+        <Route
+          path="/claims/assignments"
+          element={<ClaimsAssignmentsScreen />}
+        />
+        <Route
+          path="/claims/workbenches"
+          element={<ClaimsWorkbenchesScreen />}
+        />
+        <Route
+          path="/claims/providers"
+          element={<ProviderCoordinationScreen />}
+        />
         <Route path="/claims/payments" element={<ClaimsPaymentsScreen />} />
-        <Route path="/claims/recoveries" element={<RecoveriesSubrogationScreen />} />
+        <Route
+          path="/claims/recoveries"
+          element={<RecoveriesSubrogationScreen />}
+        />
         <Route path="/claims/quality" element={<QualityLeakageScreen />} />
         <Route path="/claims/reports" element={<ClaimsReportScreen />} />
 
@@ -68,9 +80,18 @@ export default function AppRouter() {
         <Route path="/reporting/kpis" element={<PortfolioKPIsScreen />} />
         <Route path="/reporting/claims" element={<ClaimsAnalyticsScreen />} />
         <Route path="/reporting/sales" element={<SalesFunnelScreen />} />
-        <Route path="/reporting/customers" element={<CustomerAnalyticsScreen />} />
-        <Route path="/reporting/operational" element={<OperationalReportsScreen />} />
-        <Route path="/reporting/regulatory" element={<RegulatoryReportsScreen />} />
+        <Route
+          path="/reporting/customers"
+          element={<CustomerAnalyticsScreen />}
+        />
+        <Route
+          path="/reporting/operational"
+          element={<OperationalReportsScreen />}
+        />
+        <Route
+          path="/reporting/regulatory"
+          element={<RegulatoryReportsScreen />}
+        />
         <Route path="/reporting/exports" element={<DataExportsScreen />} />
         <Route path="/system/status" element={<SystemStatusScreen />} />
         <Route path="/system/jobs" element={<SystemJobsScreen />} />
