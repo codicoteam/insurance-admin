@@ -25,7 +25,7 @@ const Login = () => {
       setIsLoading(false);
       // For demo purposes, accept any email/password
       if (email && password) {
-        navigate('/');
+        navigate('/dashboard/executive');
       } else {
         setError('Please enter both email and password');
       }
@@ -55,23 +55,7 @@ const Login = () => {
             Secure your future with confidence. Access your policies, file claims, and manage your coverage.
           </p>
 
-          <div className="space-y-4 max-w-md mx-auto lg:mx-0">
-            {[
-              { icon: Shield, text: '500K+ active policies managed' },
-              { icon: Users, text: '75K+ satisfied customers' },
-              { icon: Award, text: '25+ years of trust' }
-            ].map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <div key={idx} className="flex items-center gap-3 text-gray-700">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircle className="w-4 h-4 text-green-600" />
-                  </div>
-                  <span className="text-lg">{item.text}</span>
-                </div>
-              );
-            })}
-          </div>
+       
 
           {/* Testimonial */}
           <div className="mt-12 hidden lg:block">
