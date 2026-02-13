@@ -15,6 +15,11 @@ import VerificationQueue from "../pages/verification";
 import ManualReviewScreen from "../pages/manualreview";
 import Rules from "../pages/rules";
 import KYCReportsScreen from "../pages/reports";
+import ProductVersionExplainer from "../pages/products";
+import ProductConfigurationPage from "../pages/coverages";
+import FormsDisclosuresOverview from "../pages/forms";
+import DocumentTemplatesPage from "../pages/templates";
+import AvailabilityPage from "../pages/availability";
 
  export default function AppRouter () {
 
@@ -33,9 +38,14 @@ import KYCReportsScreen from "../pages/reports";
         <Route path="/users/reviews" element={<AccessReviewScreen/>} />
         <Route path="/users/audit" element={<AuditTrailScreen/>} />
         <Route path="/kyc/queue" element={<VerificationQueue/>} />
-         <Route path="/kyc/review" element={<ManualReviewScreen/>} />
-         <Route path="/kyc/rules" element={<Rules/>} />
-         <Route path="/kyc/reports" element={<KYCReportsScreen/>} />
+        <Route path="/kyc/review" element={<ManualReviewScreen/>} />
+        <Route path="/kyc/rules" element={<Rules/>} />
+        <Route path="/kyc/reports" element={<KYCReportsScreen/>} />
+        <Route path="/products" element={<ProductVersionExplainer/>} />
+        <Route path="/products/coverages" element={<ProductConfigurationPage/>} />
+        <Route path="/forms" element={<FormsDisclosuresOverview/>} />
+        <Route path="/products/templates" element={<DocumentTemplatesPage/>} />
+        <Route path="/products/availability" element={<AvailabilityPage/>} />
         
         
         

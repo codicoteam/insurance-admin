@@ -80,7 +80,7 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({ isOpen = false, onC
       children: [
         { id: 'products-versions', label: 'Products & Versions', path: '/products' },
         { id: 'coverages', label: 'Coverages & Riders', path: '/products/coverages' },
-        { id: 'forms', label: 'Forms & Disclosures', path: '/products/forms' },
+        { id: 'forms', label: 'Forms & Disclosures', path: '/forms' },
         { id: 'doc-templates', label: 'Document Templates', path: '/products/templates' },
         { id: 'availability', label: 'Availability', path: '/products/availability' }
       ]
