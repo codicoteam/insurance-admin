@@ -22,6 +22,12 @@ import CustomerAnalyticsScreen from "../pages/reporting-customers";
 import OperationalReportsScreen from "../pages/reporting-operational";
 import RegulatoryReportsScreen from "../pages/reporting-regulatory";
 import DataExportsScreen from "../pages/reporting-exports";
+import SystemStatusScreen from "../pages/system-status";
+import SystemJobsScreen from "../pages/system-jobs";
+import SystemLogsScreen from "../pages/system-logs";
+import SystemBackupsScreen from "../pages/system-backups";
+import SystemReleasesScreen from "../pages/system-releases";
+import SystemConfigScreen from "../pages/system-config";
 
 export default function AppRouter () {
 
@@ -50,6 +56,12 @@ export default function AppRouter () {
         <Route path="/reporting/operational" element={<OperationalReportsScreen/>} />
         <Route path="/reporting/regulatory" element={<RegulatoryReportsScreen/>} />
         <Route path="/reporting/exports" element={<DataExportsScreen/>} />
+        <Route path="/system/status" element={<SystemStatusScreen/>} />
+        <Route path="/system/jobs" element={<SystemJobsScreen/>} />
+        <Route path="/system/logs" element={<SystemLogsScreen/>} />
+        <Route path="/system/backups" element={<SystemBackupsScreen/>} />
+        <Route path="/system/releases" element={<SystemReleasesScreen/>} />
+        <Route path="/system/config" element={<SystemConfigScreen/>} />
       </Routes>
     </BrowserRouter>
   );
