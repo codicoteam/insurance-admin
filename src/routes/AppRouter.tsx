@@ -23,12 +23,26 @@ import Home from "../features/welcome/home";
 import Contact from "../features/welcome/contact";
 import Register from "../pages/register";
 import Login from "../pages/login";
+import PortfolioKPIsScreen from "../pages/reporting-kpis";
+import ClaimsAnalyticsScreen from "../pages/reporting-claims";
+import SalesFunnelScreen from "../pages/reporting-sales";
+import CustomerAnalyticsScreen from "../pages/reporting-customers";
+import OperationalReportsScreen from "../pages/reporting-operational";
+import RegulatoryReportsScreen from "../pages/reporting-regulatory";
+import DataExportsScreen from "../pages/reporting-exports";
+import SystemStatusScreen from "../pages/system-status";
+import SystemJobsScreen from "../pages/system-jobs";
+import SystemLogsScreen from "../pages/system-logs";
+import SystemBackupsScreen from "../pages/system-backups";
+import SystemReleasesScreen from "../pages/system-releases";
+import SystemConfigScreen from "../pages/system-config";
 
 export default function AppRouter() {
 
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<ExecutiveOverview />} />
         <Route path="/dashboard/executive" element={<ExecutiveOverview />} />
         <Route path="/dashboard/operational" element={<Dashboard />} />
         <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
@@ -45,14 +59,21 @@ export default function AppRouter() {
         <Route path="/kyc/rules" element={<Rules />} />
         <Route path="/kyc/reports" element={<KYCReportsScreen />} />
         <Route path="/uyuyu" element={<WelcomeScreen />} />
-
-
-
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-
-
-
+        <Route path="/reporting/kpis" element={<PortfolioKPIsScreen />} />
+        <Route path="/reporting/claims" element={<ClaimsAnalyticsScreen />} />
+        <Route path="/reporting/sales" element={<SalesFunnelScreen />} />
+        <Route path="/reporting/customers" element={<CustomerAnalyticsScreen />} />
+        <Route path="/reporting/operational" element={<OperationalReportsScreen />} />
+        <Route path="/reporting/regulatory" element={<RegulatoryReportsScreen />} />
+        <Route path="/reporting/exports" element={<DataExportsScreen />} />
+        <Route path="/system/status" element={<SystemStatusScreen />} />
+        <Route path="/system/jobs" element={<SystemJobsScreen />} />
+        <Route path="/system/logs" element={<SystemLogsScreen />} />
+        <Route path="/system/backups" element={<SystemBackupsScreen />} />
+        <Route path="/system/releases" element={<SystemReleasesScreen />} />
+        <Route path="/system/config" element={<SystemConfigScreen />} />
       </Routes>
 
       <Layout>
@@ -63,14 +84,9 @@ export default function AppRouter() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </Layout>
-
-
-
-
-
+    </BrowserRouter>
+  );
 
     </BrowserRouter>
   );
 }
-
-
