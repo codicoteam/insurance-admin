@@ -19,6 +19,12 @@ import FormsDisclosuresOverview from "../pages/forms";
 import DocumentTemplatesPage from "../pages/templates";
 import AvailabilityPage from "../pages/availability";
 import PolicyDetailsPage from "../pages/details";
+import PolicyDocumentsPage from "../pages/Policy Documents page";
+import LeadSourcePage from "../pages/lead source";
+import ClaimsRecoveriesScreen from "../pages/claims-recoveries";
+import InsurancePolicyActionsPage from "../pages/actions";
+import BeneficiariesPage from "../pages/Beneficiaries";
+import AssetsPage from "../pages/Assets";
 import PortfolioKPIsScreen from "../pages/reporting-kpis";
 import ClaimsAnalyticsScreen from "../pages/reporting-claims";
 import SalesFunnelScreen from "../pages/reporting-sales";
@@ -53,6 +59,12 @@ export default function AppRouter() {
         <Route path="/quotes/monitor" element={<AdminQuotes />} />
         <Route path="/policies/search" element={<PolicyAdminScreen />} />
         <Route path="/policies/details" element={<PolicyDetailsPage />} />
+        <Route path="/policies/documents" element={<PolicyDocumentsPage />} />
+        <Route path="/quotes/sources" element={<LeadSourcePage />} />
+        <Route path="/quotes/recovery" element={<ClaimsRecoveriesScreen />} />
+        <Route path="/policies/actions" element={<InsurancePolicyActionsPage />} />
+        <Route path="/policies/beneficiaries" element={<BeneficiariesPage />} />
+        <Route path="/policies/assets" element={<AssetsPage />} />
 
         {/* Claims Routes */}
         <Route path="/claims/fnol" element={<FNOLIntakeScreen />} />
