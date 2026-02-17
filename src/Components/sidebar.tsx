@@ -415,7 +415,12 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
                       key={child.id}
                       to={child.path}
                       end
-                      onClick={onClose}
+                      onClick={() => {
+                        // Only close sidebar on mobile (when onClose is provided and sidebar is open)
+                        if (onClose && window.innerWidth < 1024) {
+                          onClose();
+                        }
+                      }}
                       className={({ isActive }) =>
                         `block px-3 py-2 text-sm rounded-lg transition-colors ${
                           isActive
