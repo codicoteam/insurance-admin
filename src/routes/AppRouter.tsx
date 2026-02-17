@@ -40,6 +40,11 @@ import UnderwritingReferrals from "../pages/underwriting-referrals";
 import UnderwritingGuidelines from "../pages/underwriting-guidelines";
 import UnderwritingTemplates from "../pages/underwriting-templates";
 import UnderwritingReports from "../pages/underwriting-reports";
+import PricingRates from "../pages/pricing-rates";
+import PricingFactors from "../pages/pricing-factors";
+import PricingExperiments from "../pages/pricing-experiments";
+import PricingSimulation from "../pages/pricing-simulation";
+import PricingVersioning from "../pages/pricing-versioning";
 
 export default function AppRouter() {
   return (
@@ -90,6 +95,13 @@ export default function AppRouter() {
           element={<UnderwritingTemplates />}
         />
         <Route path="/underwriting/reports" element={<UnderwritingReports />} />
+
+        {/* Pricing Routes */}
+        <Route path="/pricing/rates" element={<PricingRates />} />
+        <Route path="/pricing/factors" element={<PricingFactors />} />
+        <Route path="/pricing/experiments" element={<PricingExperiments />} />
+        <Route path="/pricing/simulation" element={<PricingSimulation />} />
+        <Route path="/pricing/versioning" element={<PricingVersioning />} />
 
         <Route path="/users/roles" element={<RolesPermissionsManager />} />
         <Route path="/users/reviews" element={<AccessReviewScreen />} />
