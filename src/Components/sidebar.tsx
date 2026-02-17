@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   Home,
   Users,
@@ -43,15 +43,43 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
   isOpen = false,
   onClose,
 }) => {
+  const location = useLocation();
   const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
     home: true,
   });
 
+  // Auto-expand section based on current route
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    // Find which section contains the current path
+    const activeSection = menuItems.find((section) =>
+      section.children.some((child) => currentPath.startsWith(child.path)),
+    );
+
+    if (activeSection) {
+      setExpandedSections((prev) => ({
+        ...prev,
+        [activeSection.id]: true,
+      }));
+    }
+  }, [location.pathname]);
+
   const toggleSection = (sectionId: string): void => {
-    setExpandedSections((prev) => ({
-      ...prev,
-      [sectionId]: !prev[sectionId],
-    }));
+    setExpandedSections((prev) => {
+      // If clicking on an already expanded section, just toggle it
+      if (prev[sectionId]) {
+        return {
+          ...prev,
+          [sectionId]: false,
+        };
+      }
+      // If clicking on a collapsed section, expand it (keep others as they are)
+      return {
+        ...prev,
+        [sectionId]: true,
+      };
+    });
   };
 
   const menuItems: MenuSection[] = [
