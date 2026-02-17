@@ -35,6 +35,11 @@ import ClaimsWorkbenchesScreen from "../pages/claims-workbenches";
 import ProviderCoordinationScreen from "../pages/claims-providers";
 import RecoveriesSubrogationScreen from "../pages/claims-recoveries";
 import QualityLeakageScreen from "../pages/claims-quality";
+import UnderwritingRules from "../pages/underwriting-rules";
+import UnderwritingReferrals from "../pages/underwriting-referrals";
+import UnderwritingGuidelines from "../pages/underwriting-guidelines";
+import UnderwritingTemplates from "../pages/underwriting-templates";
+import UnderwritingReports from "../pages/underwriting-reports";
 
 export default function AppRouter() {
   return (
@@ -69,6 +74,22 @@ export default function AppRouter() {
         />
         <Route path="/claims/quality" element={<QualityLeakageScreen />} />
         <Route path="/claims/reports" element={<ClaimsReportScreen />} />
+
+        {/* Underwriting Routes */}
+        <Route path="/underwriting/rules" element={<UnderwritingRules />} />
+        <Route
+          path="/underwriting/referrals"
+          element={<UnderwritingReferrals />}
+        />
+        <Route
+          path="/underwriting/guidelines"
+          element={<UnderwritingGuidelines />}
+        />
+        <Route
+          path="/underwriting/templates"
+          element={<UnderwritingTemplates />}
+        />
+        <Route path="/underwriting/reports" element={<UnderwritingReports />} />
 
         <Route path="/users/roles" element={<RolesPermissionsManager />} />
         <Route path="/users/reviews" element={<AccessReviewScreen />} />
