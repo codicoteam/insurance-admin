@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
   Home,
@@ -15,6 +15,7 @@ import {
   ChevronDown,
   ChevronRight,
   X,
+  Menu,
 } from "lucide-react";
 
 interface MenuItem {
@@ -37,12 +38,16 @@ interface ExpandedSections {
 interface InsuranceSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  hideOnDesktop?: boolean; // New prop to hide sidebar completely on desktop
 }
 
 const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
   isOpen = false,
   onClose,
+  hideOnDesktop = false,
 }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
     home: true,
@@ -58,25 +63,96 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
     );
 
     if (activeSection) {
-      setExpandedSections((prev) => ({
-        ...prev,
+      // Expand only the active section, collapse all others
+      setExpandedSections({
         [activeSection.id]: true,
-      }));
+      });
     }
   }, [location.pathname]);
 
+  // Auto-collapse sidebar when available space becomes less than 20% of viewport width
+  useEffect(() => {
+    const sidebarElement = sidebarRef.current;
+    if (!sidebarElement) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const width = entry.contentRect.width;
+        const viewportWidth = window.innerWidth;
+        const thresholdWidth = viewportWidth * 0.2; // 20% of viewport width
+
+        // If the sidebar width is being constrained (less than 20% of viewport when expanded)
+        // and it's not already collapsed, collapse it
+        if (width < thresholdWidth && !isCollapsed) {
+          setIsCollapsed(true);
+        }
+      }
+    });
+
+    // Also monitor viewport width for mobile behavior
+    const handleResize = () => {
+      // If viewport is less than 1024px (lg breakpoint) and sidebar is open, close it on mobile
+      if (window.innerWidth < 1024 && isOpen && onClose) {
+        onClose();
+      }
+
+      // Auto-collapse when viewport is too small to fit full sidebar
+      const availableWidth = window.innerWidth;
+      if (availableWidth < 1024) {
+        // On mobile, don't auto-collapse, let the overlay handle it
+        return;
+      }
+
+      // On desktop, if there's not enough space for expanded sidebar (less than 25% of viewport), collapse it
+      const expandedSidebarWidth = 288; // w-72 = 18rem = 288px
+      const minViewportForExpanded = expandedSidebarWidth / 0.25; // Sidebar should be at most 25% of viewport
+
+      if (availableWidth < minViewportForExpanded) {
+        setIsCollapsed(true);
+      }
+    };
+
+    // Set initial state
+    handleResize();
+    resizeObserver.observe(sidebarElement);
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isOpen, onClose, isCollapsed]);
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   const toggleSection = (sectionId: string): void => {
     setExpandedSections((prev) => {
-      // If clicking on an already expanded section, just toggle it
+      const currentPath = location.pathname;
+
+      // Find which section contains the current active path
+      const activeSection = menuItems.find((section) =>
+        section.children.some((child) => currentPath.startsWith(child.path)),
+      );
+
+      // If clicking on the section that contains the active route, keep it expanded
+      if (prev[sectionId] && activeSection?.id === sectionId) {
+        return prev; // Don't collapse the active section
+      }
+
+      // If clicking on an already expanded section (but not active), collapse it
       if (prev[sectionId]) {
         return {
-          ...prev,
           [sectionId]: false,
         };
       }
-      // If clicking on a collapsed section, expand it (keep others as they are)
+
+      // If clicking on a collapsed section, expand it and collapse all others
       return {
-        ...prev,
         [sectionId]: true,
       };
     });
@@ -357,31 +433,58 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
 
   return (
     <div
-      className={`w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed lg:sticky top-0 h-screen transition-transform duration-200 ease-out ${
-        isOpen ? "translate-x-0 z-50" : "-translate-x-full lg:translate-x-0"
+      ref={sidebarRef}
+      className={`bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed lg:sticky top-0 h-screen transition-all duration-300 ease-out hover:shadow-lg ${
+        isCollapsed ? "w-16" : "w-72"
+      } ${
+        hideOnDesktop
+          ? isOpen
+            ? "translate-x-0 z-50"
+            : "-translate-x-full"
+          : isOpen
+            ? "translate-x-0 z-50"
+            : "-translate-x-full lg:translate-x-0"
       }`}
     >
       {/* Header */}
-      <div className="p-6 border-b border-gray-200 flex-shrink-0">
+      <div className="p-4 border-b border-gray-200 flex-shrink-0">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+          {!isCollapsed && (
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">InsureCore</h1>
+                <p className="text-xs text-gray-500">Admin Portal</p>
+              </div>
+            </div>
+          )}
+          {isCollapsed && (
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center mx-auto">
               <Shield className="w-6 h-6 text-white" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">InsureCore</h1>
-              <p className="text-xs text-gray-500">Admin Portal</p>
-            </div>
-          </div>
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
-              aria-label="Close sidebar"
-            >
-              <X className="w-5 h-5 text-gray-600" />
-            </button>
           )}
+          <div className="flex items-center gap-2">
+            {/* Hamburger menu button - visible on desktop */}
+            <button
+              onClick={toggleCollapse}
+              className="hidden lg:block p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Toggle sidebar"
+            >
+              <Menu className="w-5 h-5 text-gray-600" />
+            </button>
+            {/* Close button - visible on mobile */}
+            {onClose && (
+              <button
+                onClick={onClose}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
+                aria-label="Close sidebar"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -395,20 +498,27 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
             <div key={section.id} className="mb-2">
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                className={`w-full flex items-center ${isCollapsed ? "justify-center" : "justify-between"} px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors`}
+                title={isCollapsed ? section.label : ""}
               >
-                <div className="flex items-center space-x-3">
+                <div
+                  className={`flex items-center ${isCollapsed ? "" : "space-x-3"}`}
+                >
                   <Icon className="w-4 h-4 text-gray-500" />
-                  <span>{section.label}</span>
+                  {!isCollapsed && <span>{section.label}</span>}
                 </div>
-                {isExpanded ? (
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
+                {!isCollapsed && (
+                  <>
+                    {isExpanded ? (
+                      <ChevronDown className="w-4 h-4 text-gray-400" />
+                    ) : (
+                      <ChevronRight className="w-4 h-4 text-gray-400" />
+                    )}
+                  </>
                 )}
               </button>
 
-              {isExpanded && (
+              {isExpanded && !isCollapsed && (
                 <div className="mt-1 ml-4 space-y-1">
                   {section.children.map((child) => (
                     <NavLink
