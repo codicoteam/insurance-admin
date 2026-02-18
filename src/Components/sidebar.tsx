@@ -47,6 +47,7 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
   hideOnDesktop = false,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [manualToggle, setManualToggle] = useState(false);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
@@ -72,6 +73,9 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
 
   // Auto-collapse sidebar when available space becomes less than 20% of viewport width
   useEffect(() => {
+    // Don't auto-collapse if user manually toggled
+    if (manualToggle) return;
+
     const sidebarElement = sidebarRef.current;
     if (!sidebarElement) return;
 
@@ -83,7 +87,7 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
 
         // If the sidebar width is being constrained (less than 20% of viewport when expanded)
         // and it's not already collapsed, collapse it
-        if (width < thresholdWidth && !isCollapsed) {
+        if (width < thresholdWidth && !isCollapsed && !manualToggle) {
           setIsCollapsed(true);
         }
       }
@@ -107,8 +111,15 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
       const expandedSidebarWidth = 288; // w-72 = 18rem = 288px
       const minViewportForExpanded = expandedSidebarWidth / 0.25; // Sidebar should be at most 25% of viewport
 
-      if (availableWidth < minViewportForExpanded) {
+      if (availableWidth < minViewportForExpanded && !manualToggle) {
         setIsCollapsed(true);
+      } else if (
+        availableWidth >= minViewportForExpanded &&
+        manualToggle &&
+        !isCollapsed
+      ) {
+        // Reset manual toggle flag when there's enough space and user expanded it
+        setManualToggle(false);
       }
     };
 
@@ -124,10 +135,11 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
       resizeObserver.disconnect();
       window.removeEventListener("resize", handleResize);
     };
-  }, [isOpen, onClose, isCollapsed]);
+  }, [isOpen, onClose, isCollapsed, manualToggle]);
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
+    setManualToggle(true);
   };
 
   const toggleSection = (sectionId: string): void => {
