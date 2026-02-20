@@ -56,6 +56,7 @@ export default function AppRouter() {
       <Routes>
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<LoginScreen />} />
+        <Route path="/dashboard" element={<ExecutiveOverview />} />
         <Route path="/Executive" element={<ExecutiveOverview />} />
         <Route path="/dashboard/operational" element={<Dashboard />} />
         <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
