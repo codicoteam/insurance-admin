@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Shield, Home, Info, Phone, Briefcase, ChevronRight, 
   Menu, X, Users, Target, Clock, Award, CheckCircle,
@@ -8,6 +9,7 @@ import {
 type Screen = 'home' | 'about' | 'services' | 'contact';
 
 const WelcomeScreen = () => {
+  const navigate = useNavigate();
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -584,7 +586,10 @@ const WelcomeScreen = () => {
 
             {/* Desktop CTA */}
             <div className="hidden lg:block">
-              <button className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl">
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
+              >
                 Login
               </button>
             </div>
@@ -628,8 +633,11 @@ const WelcomeScreen = () => {
                   );
                 })}
                 <div className="pt-4 border-t border-gray-200">
-                  <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium">
-                    Get a Quote
+                  <button 
+                    onClick={() => navigate('/login')}
+                    className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium"
+                  >
+                    Login
                   </button>
                 </div>
               </div>
