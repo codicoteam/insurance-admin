@@ -21,6 +21,7 @@ const Login = () => {
       setIsLoading(false);
       // For demo purposes, accept any email/password
       if (email && password) {
+        localStorage.setItem('isLoggedIn', 'true');
         navigate('/dashboard');
       } else {
         setError('Please enter both email and password');

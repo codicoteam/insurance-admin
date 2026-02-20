@@ -134,7 +134,10 @@ const WelcomeScreen = () => {
                 Get a Quote
               </button>
               <button 
-                onClick={() => navigate('/dashboard')}
+                onClick={() => {
+                  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                  navigate(isLoggedIn ? '/dashboard' : '/login');
+                }}
                 className="px-8 py-4 bg-white/20 backdrop-blur border-2 border-white rounded-xl font-semibold hover:bg-white/30 transition-all hover:shadow-2xl transform hover:-translate-y-1"
               >
                 Executive
