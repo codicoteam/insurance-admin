@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ExecutiveOverview from "../pages/Executive";
 import Dashboard from "../pages/operations";
+import WelcomeScreen from "../pages/welcome";
 import AlertsTasksScreen from "../pages/Alerts & Tasks";
 import UsersScreen from "../pages/users";
 import AdminQuotes from "../pages/Quotes";
@@ -52,7 +53,8 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ExecutiveOverview />} />
+        <Route path="/" element={<WelcomeScreen />} />
+        <Route path="/dashboard" element={<ExecutiveOverview />} />
         <Route path="/dashboard/operational" element={<Dashboard />} />
         <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
         <Route path="/users" element={<UsersScreen />} />

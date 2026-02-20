@@ -44,7 +44,6 @@ interface Rider {
 
 const ProductConfigurationPage: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'coverages' | 'riders'>('coverages');
 
   // Mock Data
   const productInfo: ProductVersion = {
@@ -266,7 +265,14 @@ const TableSection = ({
   badge,
   buttonLabel,
   children
-}: any) => (
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  iconColor: string;
+  title: string;
+  badge: string;
+  buttonLabel: string;
+  children: React.ReactNode;
+}) => (
   <div className="bg-white rounded-xl shadow-sm border border-blue-100">
     <div className="p-6 border-b border-blue-100 flex items-center justify-between">
       <div className="flex items-center gap-2">
