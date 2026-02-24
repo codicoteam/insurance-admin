@@ -15,7 +15,6 @@ import {
   Menu,
   Shield,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface CustomerMetric {
   id: string;
@@ -129,11 +128,6 @@ const CustomerAnalyticsScreen = () => {
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">

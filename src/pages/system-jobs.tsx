@@ -16,7 +16,6 @@ import {
   Menu,
   Activity,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Job {
   id: string;
@@ -217,17 +216,41 @@ const SystemJobsScreen = () => {
     const baseClasses = "px-3 py-1 text-xs font-medium rounded-full";
     switch (status) {
       case "completed":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Completed</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Completed
+          </span>
+        );
       case "running":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>Running</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            Running
+          </span>
+        );
       case "failed":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Failed</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Failed
+          </span>
+        );
       case "pending":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>Pending</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            Pending
+          </span>
+        );
       case "scheduled":
-        return <span className={`${baseClasses} bg-purple-100 text-purple-700`}>Scheduled</span>;
+        return (
+          <span className={`${baseClasses} bg-purple-100 text-purple-700`}>
+            Scheduled
+          </span>
+        );
       default:
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>{status}</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            {status}
+          </span>
+        );
     }
   };
 
@@ -235,11 +258,21 @@ const SystemJobsScreen = () => {
     const baseClasses = "px-2 py-0.5 text-xs font-medium rounded";
     switch (priority) {
       case "high":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>High</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>High</span>
+        );
       case "medium":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>Medium</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            Medium
+          </span>
+        );
       case "low":
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>Low</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            Low
+          </span>
+        );
       default:
         return null;
     }
@@ -256,15 +289,12 @@ const SystemJobsScreen = () => {
   const completedJobs = jobs.filter((j) => j.status === "completed").length;
   const runningJobs = jobs.filter((j) => j.status === "running").length;
   const failedJobs = jobs.filter((j) => j.status === "failed").length;
-  const pendingJobs = jobs.filter((j) => j.status === "pending" || j.status === "scheduled").length;
+  const pendingJobs = jobs.filter(
+    (j) => j.status === "pending" || j.status === "scheduled",
+  ).length;
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
@@ -311,7 +341,9 @@ const SystemJobsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Running</p>
-                    <p className="text-2xl font-bold text-blue-600 mt-1">{runningJobs}</p>
+                    <p className="text-2xl font-bold text-blue-600 mt-1">
+                      {runningJobs}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Activity className="w-6 h-6 text-blue-600" />
@@ -321,8 +353,12 @@ const SystemJobsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Completed</p>
-                    <p className="text-2xl font-bold text-green-600 mt-1">{completedJobs}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Completed
+                    </p>
+                    <p className="text-2xl font-bold text-green-600 mt-1">
+                      {completedJobs}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <CheckCircle className="w-6 h-6 text-green-600" />
@@ -333,7 +369,9 @@ const SystemJobsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Failed</p>
-                    <p className="text-2xl font-bold text-red-600 mt-1">{failedJobs}</p>
+                    <p className="text-2xl font-bold text-red-600 mt-1">
+                      {failedJobs}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <XCircle className="w-6 h-6 text-red-600" />
@@ -344,7 +382,9 @@ const SystemJobsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Pending</p>
-                    <p className="text-2xl font-bold text-yellow-600 mt-1">{pendingJobs}</p>
+                    <p className="text-2xl font-bold text-yellow-600 mt-1">
+                      {pendingJobs}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                     <Clock className="w-6 h-6 text-yellow-600" />
@@ -503,8 +543,8 @@ const SystemJobsScreen = () => {
                                       job.status === "running"
                                         ? "bg-blue-500"
                                         : job.status === "failed"
-                                        ? "bg-red-500"
-                                        : "bg-green-500"
+                                          ? "bg-red-500"
+                                          : "bg-green-500"
                                     }`}
                                     style={{ width: `${job.progress}%` }}
                                   />
@@ -580,7 +620,9 @@ const SystemJobsScreen = () => {
                         </span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                        <span className="text-blue-600 text-sm">Processing</span>
+                        <span className="text-blue-600 text-sm">
+                          Processing
+                        </span>
                         <span className="text-blue-800 font-medium">
                           {queue.processing}
                         </span>
@@ -593,7 +635,9 @@ const SystemJobsScreen = () => {
                       </div>
                       <div className="pt-3 border-t border-gray-200">
                         <div className="flex items-center justify-between">
-                          <span className="text-gray-500 text-sm">Avg Wait Time</span>
+                          <span className="text-gray-500 text-sm">
+                            Avg Wait Time
+                          </span>
                           <span className="text-gray-800 font-medium">
                             {queue.avgWaitTime}
                           </span>
@@ -617,14 +661,18 @@ const SystemJobsScreen = () => {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   {jobs
-                    .filter((j) => j.status === "scheduled" || j.status === "pending")
+                    .filter(
+                      (j) => j.status === "scheduled" || j.status === "pending",
+                    )
                     .map((job) => (
                       <div
                         key={job.id}
                         className="p-4 bg-gray-50 rounded-lg border border-gray-200"
                       >
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-gray-500">{job.id}</span>
+                          <span className="text-xs text-gray-500">
+                            {job.id}
+                          </span>
                           {getPriorityBadge(job.priority)}
                         </div>
                         <h4 className="text-gray-800 font-medium mb-2">

@@ -15,9 +15,7 @@ import {
   TrendingUp,
   TrendingDown,
   Shield,
-  Menu,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface ServiceStatus {
   id: string;
@@ -40,7 +38,6 @@ interface MetricData {
 }
 
 const SystemStatusScreen = () => {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<
     "overview" | "services" | "infrastructure"
   >("overview");
@@ -271,33 +268,7 @@ const SystemStatusScreen = () => {
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
-      <div className="flex-1 lg:ml-0">
-        {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Open sidebar"
-            >
-              <Menu className="w-6 h-6 text-gray-600" />
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                <Shield className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900">InsureCore</h1>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div className="flex-1">
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 p-6">
           <div className="max-w-7xl mx-auto">
             {/* Header */}

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Search, Filter, Download, Plus, Menu, Shield } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Claim {
   id: string;
@@ -17,9 +16,9 @@ interface Claim {
 }
 
 const FNOLIntakeScreen = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const claims: Claim[] = [
     {
@@ -115,17 +114,22 @@ const FNOLIntakeScreen = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
       <div className="flex-1 lg:ml-0">
+        {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">
             <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Open sidebar"
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2 rounded-lg hover:bg-gray-100"
             >
               <Menu className="w-6 h-6 text-gray-600" />
             </button>
@@ -133,15 +137,15 @@ const FNOLIntakeScreen = () => {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
                 <Shield className="w-4 h-4 text-white" />
               </div>
-              <div>
-                <h1 className="text-lg font-bold text-gray-900">InsureCore</h1>
-              </div>
+              <h1 className="text-lg font-bold text-gray-900">InsureCore</h1>
             </div>
           </div>
         </div>
+
+        {/* Header */}
         <div className="bg-white border-b border-gray-200 p-6">
           <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-3xl font-bold text-gray-900 mb-1">
                   FNOL Intake
@@ -155,40 +159,40 @@ const FNOLIntakeScreen = () => {
                 New Claim
               </button>
             </div>
-            <div className="grid grid-cols-4 gap-4">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                <p className="text-gray-600 text-sm mb-1">Total New Claims</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {stats.total}
-                </p>
-              </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <p className="text-blue-600 text-sm mb-1">New (Unassigned)</p>
-                <p className="text-3xl font-bold text-blue-700">{stats.new}</p>
-              </div>
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                <p className="text-purple-600 text-sm mb-1">Assigned</p>
-                <p className="text-3xl font-bold text-purple-700">
-                  {stats.assigned}
-                </p>
-              </div>
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-red-600 text-sm mb-1">Urgent Priority</p>
-                <p className="text-3xl font-bold text-red-700">
-                  {stats.urgent}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
-        <div className="bg-white border-b border-gray-200 p-4">
-          <div className="max-w-7xl mx-auto">
+
+        {/* Stats Grid */}
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+              <p className="text-gray-600 text-sm mb-1">Total New Claims</p>
+              <p className="text-3xl font-bold text-gray-900">{stats.total}</p>
+            </div>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-blue-600 text-sm mb-1">New (Unassigned)</p>
+              <p className="text-3xl font-bold text-blue-700">{stats.new}</p>
+            </div>
+            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+              <p className="text-purple-600 text-sm mb-1">Assigned</p>
+              <p className="text-3xl font-bold text-purple-700">
+                {stats.assigned}
+              </p>
+            </div>
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <p className="text-red-600 text-sm mb-1">Urgent Priority</p>
+              <p className="text-3xl font-bold text-red-700">{stats.urgent}</p>
+            </div>
+          </div>
+
+          {/* Search and Filter Bar */}
+          <div className="bg-white border border-gray-200 rounded-lg p-4 mb-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search by claim number, policyholder, or policy number..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
@@ -216,8 +220,8 @@ const FNOLIntakeScreen = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="max-w-7xl mx-auto p-6">
+
+          {/* Claims Table */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -247,62 +251,75 @@ const FNOLIntakeScreen = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredClaims.map((claim) => (
-                    <tr
-                      key={claim.id}
-                      className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="py-4 px-4">
-                        <span className="text-blue-600 font-medium">
-                          {claim.claimNumber}
-                        </span>
-                        <p className="text-xs text-gray-500">
-                          {claim.policyNumber}
-                        </p>
-                      </td>
-                      <td className="py-4 px-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold">
-                            {claim.policyholder
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("")}
-                          </div>
-                          <div>
-                            <p className="font-medium text-gray-900">
-                              {claim.policyholder}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {claim.email}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-4 px-4 text-gray-600">{claim.type}</td>
-                      <td className="py-4 px-4 font-semibold text-gray-900">
-                        ${claim.amountClaimed.toLocaleString()}
-                      </td>
-                      <td className="py-4 px-4">
-                        <span
-                          className={`font-medium capitalize ${getPriorityColor(claim.priority)}`}
-                        >
-                          {claim.priority}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(claim.status)}`}
-                        >
-                          {claim.status.replace("_", " ")}
-                        </span>
-                      </td>
-                      <td className="py-4 px-4">
-                        <button className="px-3 py-1 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                          Process
-                        </button>
+                  {filteredClaims.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={7}
+                        className="text-center py-8 text-gray-500"
+                      >
+                        No claims found
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    filteredClaims.map((claim) => (
+                      <tr
+                        key={claim.id}
+                        className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="py-4 px-4">
+                          <span className="text-blue-600 font-medium">
+                            {claim.claimNumber}
+                          </span>
+                          <p className="text-xs text-gray-500">
+                            {claim.policyNumber}
+                          </p>
+                        </td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-700 font-semibold">
+                              {claim.policyholder
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")}
+                            </div>
+                            <div>
+                              <p className="font-medium text-gray-900">
+                                {claim.policyholder}
+                              </p>
+                              <p className="text-xs text-gray-500">
+                                {claim.email}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 text-gray-600">
+                          {claim.type}
+                        </td>
+                        <td className="py-4 px-4 font-semibold text-gray-900">
+                          ${claim.amountClaimed.toLocaleString()}
+                        </td>
+                        <td className="py-4 px-4">
+                          <span
+                            className={`font-medium capitalize ${getPriorityColor(claim.priority)}`}
+                          >
+                            {claim.priority}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(claim.status)}`}
+                          >
+                            {claim.status.replace("_", " ")}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4">
+                          <button className="px-3 py-1 text-sm font-medium text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                            Process
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

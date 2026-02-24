@@ -14,7 +14,6 @@ import {
   Send,
   History,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Version {
   id: string;
@@ -179,10 +178,6 @@ const PricingVersioning = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
       <div className="flex-1 lg:ml-0">
         <div className="lg:hidden bg-white border-b border-gray-200 p-4">
           <div className="flex items-center justify-between">

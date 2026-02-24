@@ -1,6 +1,20 @@
-import { useState } from 'react';
-import { User, FileText, Calendar, DollarSign, Building2, Phone, Mail, AlertCircle, CheckCircle, Download, Send, MessageSquare, Menu, Shield } from 'lucide-react';
-import InsuranceSidebar from '../Components/sidebar';
+import { useState } from "react";
+import {
+  User,
+  FileText,
+  Calendar,
+  DollarSign,
+  Building2,
+  Phone,
+  Mail,
+  AlertCircle,
+  CheckCircle,
+  Download,
+  Send,
+  MessageSquare,
+  Menu,
+  Shield,
+} from "lucide-react";
 
 interface ClaimData {
   claimNumber: string;
@@ -18,49 +32,47 @@ interface ClaimData {
   documentationStatus: string;
   patientEmail: string;
   patientPhone: string;
-  priority: 'high' | 'medium' | 'low';
+  priority: "high" | "medium" | "low";
 }
 
 export default function ManualReviewScreen() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
   const [claimData] = useState<ClaimData>({
-    claimNumber: 'CLM-2025-1847',
-    patientName: 'Sarah Johnson',
-    policyNumber: 'POL-458962',
-    dateOfBirth: '1985-03-15',
-    claimAmount: 4500.00,
-    dateSubmitted: '2025-10-15',
-    dateOfService: '2025-10-10',
-    diagnosis: 'Acute appendicitis requiring emergency surgery',
-    provider: 'City General Hospital',
-    providerContact: '+1 (555) 234-5678',
-    procedureCode: 'CPT-44950',
-    procedureDescription: 'Appendectomy - Laparoscopic',
-    documentationStatus: 'Complete - All documents received',
-    patientEmail: 'sarah.johnson@email.com',
-    patientPhone: '+1 (555) 123-4567',
-    priority: 'high'
+    claimNumber: "CLM-2025-1847",
+    patientName: "Sarah Johnson",
+    policyNumber: "POL-458962",
+    dateOfBirth: "1985-03-15",
+    claimAmount: 4500.0,
+    dateSubmitted: "2025-10-15",
+    dateOfService: "2025-10-10",
+    diagnosis: "Acute appendicitis requiring emergency surgery",
+    provider: "City General Hospital",
+    providerContact: "+1 (555) 234-5678",
+    procedureCode: "CPT-44950",
+    procedureDescription: "Appendectomy - Laparoscopic",
+    documentationStatus: "Complete - All documents received",
+    patientEmail: "sarah.johnson@email.com",
+    patientPhone: "+1 (555) 123-4567",
+    priority: "high",
   });
 
-  const [reviewDecision, setReviewDecision] = useState<string>('');
-  const [approvalAmount, setApprovalAmount] = useState<string>(claimData.claimAmount.toString());
-  const [reviewNotes, setReviewNotes] = useState<string>('');
-  const [internalComments, setInternalComments] = useState<string>('');
+  const [reviewDecision, setReviewDecision] = useState<string>("");
+  const [approvalAmount, setApprovalAmount] = useState<string>(
+    claimData.claimAmount.toString(),
+  );
+  const [reviewNotes, setReviewNotes] = useState<string>("");
+  const [internalComments, setInternalComments] = useState<string>("");
 
   const handleSubmitReview = () => {
     if (reviewDecision) {
-      alert(`Review Submitted!\nClaim: ${claimData.claimNumber}\nDecision: ${reviewDecision}\nAmount: $${approvalAmount}\nNotes: ${reviewNotes}`);
+      alert(
+        `Review Submitted!\nClaim: ${claimData.claimNumber}\nDecision: ${reviewDecision}\nAmount: $${approvalAmount}\nNotes: ${reviewNotes}`,
+      );
     }
   };
 
   return (
     <div className="flex min-h-screen bg-white">
-      {/* Sidebar */}
-      <InsuranceSidebar 
-        isOpen={sidebarOpen} 
-        onClose={() => setSidebarOpen(false)} 
-      />
-
       {/* Main Content */}
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
@@ -90,28 +102,40 @@ export default function ManualReviewScreen() {
             <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex-1">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Manual Claim Review</h1>
-                  <p className="text-blue-100 text-sm sm:text-base">Review and process insurance claim</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+                    Manual Claim Review
+                  </h1>
+                  <p className="text-blue-100 text-sm sm:text-base">
+                    Review and process insurance claim
+                  </p>
                 </div>
-                <div className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-bold text-base sm:text-lg shadow-lg ${
-                  claimData.priority === 'high' ? 'bg-red-500' :
-                  claimData.priority === 'medium' ? 'bg-yellow-500' :
-                  'bg-green-500'
-                }`}>
+                <div
+                  className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-bold text-base sm:text-lg shadow-lg ${
+                    claimData.priority === "high"
+                      ? "bg-red-500"
+                      : claimData.priority === "medium"
+                        ? "bg-yellow-500"
+                        : "bg-green-500"
+                  }`}
+                >
                   {claimData.priority.toUpperCase()} PRIORITY
                 </div>
               </div>
             </div>
-            
+
             <div className="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-gradient-to-r from-blue-50 to-white border-b border-blue-100">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Claim Number</p>
-                  <p className="text-xl sm:text-2xl font-bold text-blue-700">{claimData.claimNumber}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-blue-700">
+                    {claimData.claimNumber}
+                  </p>
                 </div>
                 <div className="text-left sm:text-right">
                   <p className="text-sm text-gray-600 mb-1">Claim Amount</p>
-                  <p className="text-xl sm:text-2xl font-bold text-blue-700">${claimData.claimAmount.toLocaleString()}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-blue-700">
+                    ${claimData.claimAmount.toLocaleString()}
+                  </p>
                 </div>
               </div>
             </div>
@@ -130,17 +154,29 @@ export default function ManualReviewScreen() {
                 </div>
                 <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-1">Full Name</p>
-                    <p className="text-base sm:text-lg font-bold text-gray-900">{claimData.patientName}</p>
+                    <p className="text-sm font-medium text-gray-600 mb-1">
+                      Full Name
+                    </p>
+                    <p className="text-base sm:text-lg font-bold text-gray-900">
+                      {claimData.patientName}
+                    </p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                      <p className="text-sm font-medium text-gray-600 mb-1">Date of Birth</p>
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{claimData.dateOfBirth}</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">
+                        Date of Birth
+                      </p>
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                        {claimData.dateOfBirth}
+                      </p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                      <p className="text-sm font-medium text-gray-600 mb-1">Policy Number</p>
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{claimData.policyNumber}</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">
+                        Policy Number
+                      </p>
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                        {claimData.policyNumber}
+                      </p>
                     </div>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
@@ -148,14 +184,18 @@ export default function ManualReviewScreen() {
                       <Mail className="w-4 h-4 text-blue-600" />
                       <p className="text-sm font-medium text-gray-600">Email</p>
                     </div>
-                    <p className="text-gray-900 text-sm sm:text-base">{claimData.patientEmail}</p>
+                    <p className="text-gray-900 text-sm sm:text-base">
+                      {claimData.patientEmail}
+                    </p>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
                     <div className="flex items-center gap-2 mb-2">
                       <Phone className="w-4 h-4 text-blue-600" />
                       <p className="text-sm font-medium text-gray-600">Phone</p>
                     </div>
-                    <p className="text-gray-900 text-sm sm:text-base">{claimData.patientPhone}</p>
+                    <p className="text-gray-900 text-sm sm:text-base">
+                      {claimData.patientPhone}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -173,35 +213,59 @@ export default function ManualReviewScreen() {
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="w-4 h-4 text-blue-600" />
-                        <p className="text-sm font-medium text-gray-600">Date Submitted</p>
+                        <p className="text-sm font-medium text-gray-600">
+                          Date Submitted
+                        </p>
                       </div>
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{claimData.dateSubmitted}</p>
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                        {claimData.dateSubmitted}
+                      </p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="w-4 h-4 text-blue-600" />
-                        <p className="text-sm font-medium text-gray-600">Date of Service</p>
+                        <p className="text-sm font-medium text-gray-600">
+                          Date of Service
+                        </p>
                       </div>
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base">{claimData.dateOfService}</p>
+                      <p className="font-semibold text-gray-900 text-sm sm:text-base">
+                        {claimData.dateOfService}
+                      </p>
                     </div>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-2">Diagnosis</p>
-                    <p className="text-gray-900 text-sm sm:text-base">{claimData.diagnosis}</p>
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Diagnosis
+                    </p>
+                    <p className="text-gray-900 text-sm sm:text-base">
+                      {claimData.diagnosis}
+                    </p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                      <p className="text-sm font-medium text-gray-600 mb-1">Procedure Code</p>
-                      <p className="font-semibold text-blue-700 text-sm sm:text-base">{claimData.procedureCode}</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">
+                        Procedure Code
+                      </p>
+                      <p className="font-semibold text-blue-700 text-sm sm:text-base">
+                        {claimData.procedureCode}
+                      </p>
                     </div>
                     <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                      <p className="text-sm font-medium text-gray-600 mb-1">Amount</p>
-                      <p className="font-bold text-blue-700 text-base sm:text-lg">${claimData.claimAmount.toLocaleString()}</p>
+                      <p className="text-sm font-medium text-gray-600 mb-1">
+                        Amount
+                      </p>
+                      <p className="font-bold text-blue-700 text-base sm:text-lg">
+                        ${claimData.claimAmount.toLocaleString()}
+                      </p>
                     </div>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-2">Procedure Description</p>
-                    <p className="text-gray-900 text-sm sm:text-base">{claimData.procedureDescription}</p>
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Procedure Description
+                    </p>
+                    <p className="text-gray-900 text-sm sm:text-base">
+                      {claimData.procedureDescription}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -218,18 +282,30 @@ export default function ManualReviewScreen() {
               <div className="p-4 sm:p-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-2">Provider Name</p>
-                    <p className="text-base sm:text-lg font-bold text-gray-900">{claimData.provider}</p>
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Provider Name
+                    </p>
+                    <p className="text-base sm:text-lg font-bold text-gray-900">
+                      {claimData.provider}
+                    </p>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-2">Contact Number</p>
-                    <p className="text-base sm:text-lg font-semibold text-gray-900">{claimData.providerContact}</p>
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Contact Number
+                    </p>
+                    <p className="text-base sm:text-lg font-semibold text-gray-900">
+                      {claimData.providerContact}
+                    </p>
                   </div>
                   <div className="bg-gradient-to-br from-blue-50 to-white p-3 sm:p-4 rounded-lg border border-blue-100">
-                    <p className="text-sm font-medium text-gray-600 mb-2">Documentation Status</p>
+                    <p className="text-sm font-medium text-gray-600 mb-2">
+                      Documentation Status
+                    </p>
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" />
-                      <p className="font-semibold text-green-700 text-sm sm:text-base">{claimData.documentationStatus}</p>
+                      <p className="font-semibold text-green-700 text-sm sm:text-base">
+                        {claimData.documentationStatus}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -259,8 +335,12 @@ export default function ManualReviewScreen() {
                       <option value="approve">✓ Approve Claim</option>
                       <option value="partial">⚠ Partial Approval</option>
                       <option value="reject">✗ Reject Claim</option>
-                      <option value="request_info">📋 Request More Information</option>
-                      <option value="escalate">⬆ Escalate to Senior Reviewer</option>
+                      <option value="request_info">
+                        📋 Request More Information
+                      </option>
+                      <option value="escalate">
+                        ⬆ Escalate to Senior Reviewer
+                      </option>
                     </select>
                   </div>
                   <div>

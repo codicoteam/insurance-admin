@@ -16,7 +16,6 @@ import {
   Shield,
   RefreshCw,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface LogEntry {
   id: string;
@@ -133,7 +132,12 @@ const SystemLogsScreen = () => {
       status: "success",
       startTime: "2024-01-15 10:45:20.000",
       spans: 8,
-      services: ["api-gateway", "auth-service", "policy-service", "database-primary"],
+      services: [
+        "api-gateway",
+        "auth-service",
+        "policy-service",
+        "database-primary",
+      ],
     },
     {
       id: "TRACE-002",
@@ -142,7 +146,12 @@ const SystemLogsScreen = () => {
       status: "error",
       startTime: "2024-01-15 10:44:15.000",
       spans: 12,
-      services: ["api-gateway", "claims-service", "billing-service", "notification-service"],
+      services: [
+        "api-gateway",
+        "claims-service",
+        "billing-service",
+        "notification-service",
+      ],
     },
     {
       id: "TRACE-003",
@@ -197,15 +206,35 @@ const SystemLogsScreen = () => {
     const baseClasses = "px-3 py-1 text-xs font-medium rounded-full";
     switch (level) {
       case "info":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>INFO</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            INFO
+          </span>
+        );
       case "warning":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>WARN</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            WARN
+          </span>
+        );
       case "error":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>ERROR</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            ERROR
+          </span>
+        );
       case "debug":
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>DEBUG</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            DEBUG
+          </span>
+        );
       default:
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>{level.toUpperCase()}</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            {level.toUpperCase()}
+          </span>
+        );
     }
   };
 
@@ -225,11 +254,6 @@ const SystemLogsScreen = () => {
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
@@ -271,7 +295,9 @@ const SystemLogsScreen = () => {
                 }`}
                 disabled={refreshing}
               >
-                <RefreshCw className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`} />
+                <RefreshCw
+                  className={`w-5 h-5 ${refreshing ? "animate-spin" : ""}`}
+                />
                 {refreshing ? "Refreshing..." : "Refresh"}
               </button>
             </div>
@@ -282,7 +308,9 @@ const SystemLogsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Info</p>
-                    <p className="text-2xl font-bold text-blue-600 mt-1">{infoCount}</p>
+                    <p className="text-2xl font-bold text-blue-600 mt-1">
+                      {infoCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Info className="w-6 h-6 text-blue-600" />
@@ -292,8 +320,12 @@ const SystemLogsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Warnings</p>
-                    <p className="text-2xl font-bold text-yellow-600 mt-1">{warningCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Warnings
+                    </p>
+                    <p className="text-2xl font-bold text-yellow-600 mt-1">
+                      {warningCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
                     <AlertTriangle className="w-6 h-6 text-yellow-600" />
@@ -304,7 +336,9 @@ const SystemLogsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Errors</p>
-                    <p className="text-2xl font-bold text-red-600 mt-1">{errorCount}</p>
+                    <p className="text-2xl font-bold text-red-600 mt-1">
+                      {errorCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <XCircle className="w-6 h-6 text-red-600" />
@@ -315,7 +349,9 @@ const SystemLogsScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">Debug</p>
-                    <p className="text-2xl font-bold text-gray-600 mt-1">{debugCount}</p>
+                    <p className="text-2xl font-bold text-gray-600 mt-1">
+                      {debugCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                     <FileText className="w-6 h-6 text-gray-600" />
@@ -400,7 +436,9 @@ const SystemLogsScreen = () => {
                         <div
                           className="px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer"
                           onClick={() =>
-                            setExpandedLog(expandedLog === log.id ? null : log.id)
+                            setExpandedLog(
+                              expandedLog === log.id ? null : log.id,
+                            )
                           }
                         >
                           <div className="flex items-start justify-between">
@@ -420,7 +458,9 @@ const SystemLogsScreen = () => {
                                 <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
                                   <span>Trace: {log.traceId}</span>
                                   <span>Span: {log.spanId}</span>
-                                  {log.userId && <span>User: {log.userId}</span>}
+                                  {log.userId && (
+                                    <span>User: {log.userId}</span>
+                                  )}
                                 </div>
                               </div>
                             </div>

@@ -13,7 +13,6 @@ import {
   Zap,
   Settings,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface ConfigItem {
   id: string;
@@ -37,9 +36,9 @@ interface Environment {
 
 const SystemConfigScreen = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<"config" | "environments" | "secrets">(
-    "config",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "config" | "environments" | "secrets"
+  >("config");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [showSecrets, setShowSecrets] = useState(false);
   const [editingConfig, setEditingConfig] = useState<string | null>(null);
@@ -197,15 +196,35 @@ const SystemConfigScreen = () => {
     const baseClasses = "px-2 py-0.5 text-xs font-medium rounded";
     switch (category) {
       case "general":
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>General</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            General
+          </span>
+        );
       case "database":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>Database</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            Database
+          </span>
+        );
       case "security":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Security</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Security
+          </span>
+        );
       case "integrations":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Integrations</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Integrations
+          </span>
+        );
       case "features":
-        return <span className={`${baseClasses} bg-purple-100 text-purple-700`}>Features</span>;
+        return (
+          <span className={`${baseClasses} bg-purple-100 text-purple-700`}>
+            Features
+          </span>
+        );
       default:
         return null;
     }
@@ -215,11 +234,23 @@ const SystemConfigScreen = () => {
     const baseClasses = "px-3 py-1 text-xs font-medium rounded-full";
     switch (status) {
       case "active":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Active</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Active
+          </span>
+        );
       case "maintenance":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>Maintenance</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            Maintenance
+          </span>
+        );
       case "offline":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Offline</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Offline
+          </span>
+        );
       default:
         return null;
     }
@@ -229,19 +260,24 @@ const SystemConfigScreen = () => {
     return categoryFilter === "all" || item.category === categoryFilter;
   });
 
-  const generalCount = configItems.filter((c) => c.category === "general").length;
-  const databaseCount = configItems.filter((c) => c.category === "database").length;
-  const securityCount = configItems.filter((c) => c.category === "security").length;
-  const integrationsCount = configItems.filter((c) => c.category === "integrations").length;
-  const featuresCount = configItems.filter((c) => c.category === "features").length;
+  const generalCount = configItems.filter(
+    (c) => c.category === "general",
+  ).length;
+  const databaseCount = configItems.filter(
+    (c) => c.category === "database",
+  ).length;
+  const securityCount = configItems.filter(
+    (c) => c.category === "security",
+  ).length;
+  const integrationsCount = configItems.filter(
+    (c) => c.category === "integrations",
+  ).length;
+  const featuresCount = configItems.filter(
+    (c) => c.category === "features",
+  ).length;
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
@@ -281,7 +317,11 @@ const SystemConfigScreen = () => {
                   onClick={() => setShowSecrets(!showSecrets)}
                   className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2 font-medium"
                 >
-                  {showSecrets ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showSecrets ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                   {showSecrets ? "Hide Secrets" : "Show Secrets"}
                 </button>
                 <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 font-medium">
@@ -304,7 +344,9 @@ const SystemConfigScreen = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">General</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{generalCount}</p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {generalCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                     <Settings className="w-6 h-6 text-gray-600" />
@@ -321,8 +363,12 @@ const SystemConfigScreen = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Database</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{databaseCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Database
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {databaseCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Database className="w-6 h-6 text-blue-600" />
@@ -339,8 +385,12 @@ const SystemConfigScreen = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Security</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{securityCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Security
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {securityCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <Lock className="w-6 h-6 text-red-600" />
@@ -357,8 +407,12 @@ const SystemConfigScreen = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Integrations</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{integrationsCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Integrations
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {integrationsCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <Globe className="w-6 h-6 text-green-600" />
@@ -375,8 +429,12 @@ const SystemConfigScreen = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Features</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{featuresCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Features
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {featuresCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                     <Zap className="w-6 h-6 text-purple-600" />
@@ -500,7 +558,9 @@ const SystemConfigScreen = () => {
                           <td className="px-6 py-4">
                             <button
                               onClick={() =>
-                                setEditingConfig(editingConfig === item.id ? null : item.id)
+                                setEditingConfig(
+                                  editingConfig === item.id ? null : item.id,
+                                )
                               }
                               className="px-4 py-2 bg-blue-50 text-blue-700 text-sm rounded-lg hover:bg-blue-100 transition-colors"
                             >
@@ -539,21 +599,29 @@ const SystemConfigScreen = () => {
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                         <span className="text-gray-600 text-sm">URL</span>
-                        <span className="text-gray-800 font-medium">{env.url}</span>
+                        <span className="text-gray-800 font-medium">
+                          {env.url}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-gray-600 text-sm">Last Deployed</span>
-                        <span className="text-gray-800 font-medium">{env.lastDeployed}</span>
+                        <span className="text-gray-600 text-sm">
+                          Last Deployed
+                        </span>
+                        <span className="text-gray-800 font-medium">
+                          {env.lastDeployed}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                        <span className="text-gray-600 text-sm">Health Score</span>
+                        <span className="text-gray-600 text-sm">
+                          Health Score
+                        </span>
                         <span
                           className={`font-medium ${
                             env.healthScore >= 99
                               ? "text-green-600"
                               : env.healthScore >= 95
-                              ? "text-yellow-600"
-                              : "text-red-600"
+                                ? "text-yellow-600"
+                                : "text-red-600"
                           }`}
                         >
                           {env.healthScore}%
@@ -599,7 +667,9 @@ const SystemConfigScreen = () => {
                               <Lock className="w-5 h-5 text-red-600" />
                             </div>
                             <div>
-                              <h4 className="text-gray-800 font-medium">{item.key}</h4>
+                              <h4 className="text-gray-800 font-medium">
+                                {item.key}
+                              </h4>
                               <p className="text-sm text-gray-500 mt-1">
                                 {item.description}
                               </p>

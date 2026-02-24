@@ -15,7 +15,10 @@ import {
   ChevronDown,
   ChevronRight,
   X,
+  PanelLeftClose,
+  PanelLeft,
 } from "lucide-react";
+import { useSidebar } from "../contexts/useSidebar";
 
 interface MenuItem {
   id: string;
@@ -30,10 +33,6 @@ interface MenuSection {
   children: MenuItem[];
 }
 
-interface ExpandedSections {
-  [key: string]: boolean;
-}
-
 interface InsuranceSidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
@@ -43,44 +42,16 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
   isOpen = false,
   onClose,
 }) => {
+  const {
+    isCollapsed,
+    setIsCollapsed,
+    expandedSections,
+    toggleSection,
+    setActiveSectionId,
+  } = useSidebar();
+
+  const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const location = useLocation();
-  const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
-    home: true,
-  });
-
-  // Auto-expand section based on current route
-  useEffect(() => {
-    const currentPath = location.pathname;
-
-    // Find which section contains the current path
-    const activeSection = menuItems.find((section) =>
-      section.children.some((child) => currentPath.startsWith(child.path)),
-    );
-
-    if (activeSection) {
-      setExpandedSections((prev) => ({
-        ...prev,
-        [activeSection.id]: true,
-      }));
-    }
-  }, [location.pathname]);
-
-  const toggleSection = (sectionId: string): void => {
-    setExpandedSections((prev) => {
-      // If clicking on an already expanded section, just toggle it
-      if (prev[sectionId]) {
-        return {
-          ...prev,
-          [sectionId]: false,
-        };
-      }
-      // If clicking on a collapsed section, expand it (keep others as they are)
-      return {
-        ...prev,
-        [sectionId]: true,
-      };
-    });
-  };
 
   const menuItems: MenuSection[] = [
     {
@@ -142,7 +113,7 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
           label: "Coverages & Riders",
           path: "/products/coverages",
         },
-        { id: "forms", label: "Forms & Disclosures", path: "/products/forms" },
+        { id: "forms", label: "Forms & Disclosures", path: "/forms" },
         {
           id: "doc-templates",
           label: "Document Templates",
@@ -355,90 +326,186 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
     },
   ];
 
+  // Set active section based on current path
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeSection = menuItems.find((section) =>
+      section.children.some((child) => child.path === currentPath),
+    );
+    if (activeSection) {
+      setActiveSectionId(activeSection.id);
+    }
+  }, [location.pathname, menuItems, setActiveSectionId]);
+
+  const sidebarWidthClass = isCollapsed ? "w-16" : "w-64";
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024 && onClose) {
+        onClose();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [onClose]);
+
   return (
-    <div
-      className={`w-72 bg-white border-r border-gray-200 overflow-y-auto flex flex-col fixed lg:sticky top-0 h-screen transition-transform duration-200 ease-out ${
-        isOpen ? "translate-x-0 z-50" : "-translate-x-full lg:translate-x-0"
-      }`}
-    >
-      {/* Header */}
-      <div className="p-6 border-b border-gray-200 flex-shrink-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-              <Shield className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">InsureCore</h1>
-              <p className="text-xs text-gray-500">Admin Portal</p>
-            </div>
-          </div>
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
-              aria-label="Close sidebar"
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed lg:sticky top-0 h-screen ${sidebarWidthClass} bg-white border-r border-gray-200 overflow-y-auto flex flex-col transition-all duration-200 ease-out z-50 ${
+          isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        {/* Header */}
+        <div
+          className={`${isCollapsed ? "p-2" : "p-4"} border-b border-gray-200 flex-shrink-0`}
+        >
+          <div className="flex items-center justify-between">
+            <div
+              className={`flex items-center ${isCollapsed ? "justify-center w-full" : "space-x-3"}`}
             >
-              <X className="w-5 h-5 text-gray-600" />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto p-4">
-        {menuItems.map((section) => {
-          const Icon = section.icon;
-          const isExpanded = expandedSections[section.id];
-
-          return (
-            <div key={section.id} className="mb-2">
-              <button
-                onClick={() => toggleSection(section.id)}
-                className="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
-              >
-                <div className="flex items-center space-x-3">
-                  <Icon className="w-4 h-4 text-gray-500" />
-                  <span>{section.label}</span>
-                </div>
-                {isExpanded ? (
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
-                )}
-              </button>
-
-              {isExpanded && (
-                <div className="mt-1 ml-4 space-y-1">
-                  {section.children.map((child) => (
-                    <NavLink
-                      key={child.id}
-                      to={child.path}
-                      end
-                      onClick={() => {
-                        // Only close sidebar on mobile (when onClose is provided and sidebar is open)
-                        if (onClose && window.innerWidth < 1024) {
-                          onClose();
-                        }
-                      }}
-                      className={({ isActive }) =>
-                        `block px-3 py-2 text-sm rounded-lg transition-colors ${
-                          isActive
-                            ? "bg-blue-50 text-blue-700 font-medium"
-                            : "text-gray-600 hover:bg-gray-50"
-                        }`
-                      }
-                    >
-                      {child.label}
-                    </NavLink>
-                  ))}
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
+              {!isCollapsed && (
+                <div>
+                  <h1 className="text-lg font-bold text-gray-900">
+                    InsureCore
+                  </h1>
+                  <p className="text-xs text-gray-500">Admin Portal</p>
                 </div>
               )}
             </div>
-          );
-        })}
-      </nav>
-    </div>
+          </div>
+
+          {/* Collapse/Expand and Close buttons */}
+          <div
+            className={`flex items-center ${isCollapsed ? "flex-col mt-2 gap-2" : "justify-between mt-3"}`}
+          >
+            {/* Mobile close button */}
+            {onClose && (
+              <button
+                onClick={onClose}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors lg:hidden"
+                aria-label="Close sidebar"
+              >
+                <X className="w-5 h-5 text-gray-600" />
+              </button>
+            )}
+
+            {/* Desktop collapse/expand button */}
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors hidden lg:flex"
+              aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+              title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            >
+              {isCollapsed ? (
+                <PanelLeft className="w-5 h-5 text-gray-600" />
+              ) : (
+                <PanelLeftClose className="w-5 h-5 text-gray-600" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 overflow-y-auto p-2">
+          {menuItems.map((section) => {
+            const Icon = section.icon;
+            const isExpanded = expandedSections[section.id] || false;
+            const hasActiveChild = section.children.some(
+              (child) => child.path === location.pathname,
+            );
+
+            return (
+              <div key={section.id} className="mb-1 relative">
+                {/* Section header button */}
+                <div className="relative group">
+                  <button
+                    onClick={() => toggleSection(section.id)}
+                    onMouseEnter={() =>
+                      isCollapsed && setHoveredSection(section.id)
+                    }
+                    onMouseLeave={() => setHoveredSection(null)}
+                    className={`w-full flex items-center ${isCollapsed ? "justify-center p-2" : "justify-between px-3 py-2"} text-sm font-medium rounded-lg transition-colors ${
+                      hasActiveChild
+                        ? "bg-blue-100 text-blue-800"
+                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  >
+                    <div
+                      className={`flex items-center ${isCollapsed ? "" : "space-x-3"}`}
+                    >
+                      <Icon
+                        className={`w-5 h-5 ${hasActiveChild ? "text-blue-600" : "text-gray-500"} flex-shrink-0`}
+                      />
+                      {!isCollapsed && (
+                        <span className="truncate">{section.label}</span>
+                      )}
+                    </div>
+                    {!isCollapsed && (
+                      <div className="flex-shrink-0">
+                        {isExpanded ? (
+                          <ChevronDown className="w-4 h-4 text-gray-400" />
+                        ) : (
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        )}
+                      </div>
+                    )}
+                  </button>
+
+                  {/* Tooltip for collapsed mode */}
+                  {isCollapsed && hoveredSection === section.id && (
+                    <div className="absolute left-full top-0 ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-nowrap z-50">
+                      {section.label}
+                      <div className="absolute -left-1 top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Submenu items */}
+                {isExpanded && !isCollapsed && (
+                  <div className="mt-1 ml-4 space-y-1">
+                    {section.children.map((child) => (
+                      <NavLink
+                        key={child.id}
+                        to={child.path}
+                        onClick={() => {
+                          if (onClose && window.innerWidth < 1024) {
+                            onClose();
+                          }
+                        }}
+                        className={({ isActive }) =>
+                          `block px-3 py-2 text-sm rounded-lg transition-colors ${
+                            isActive
+                              ? "bg-blue-100 text-blue-800 font-medium"
+                              : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                          }`
+                        }
+                      >
+                        {child.label}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+      </aside>
+    </>
   );
 };
 

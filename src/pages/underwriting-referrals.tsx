@@ -5,8 +5,6 @@ import {
   Download,
   Plus,
   Edit,
-  FileText,
-  Menu,
   Clock,
   AlertCircle,
   CheckCircle,
@@ -14,7 +12,6 @@ import {
   Calendar,
   ArrowRight,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Referral {
   id: string;
@@ -30,7 +27,6 @@ interface Referral {
 }
 
 const UnderwritingReferrals = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
 
@@ -165,31 +161,7 @@ const UnderwritingReferrals = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
-      <div className="flex-1 lg:ml-0">
-        {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b border-gray-200 p-4">
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              aria-label="Open sidebar"
-            >
-              <Menu className="w-6 h-6 text-gray-600" />
-            </button>
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                <FileText className="w-4 h-4 text-white" />
-              </div>
-              <h1 className="text-lg font-bold text-gray-900">InsureCore</h1>
-            </div>
-          </div>
-        </div>
-
+      <div className="flex-1">
         {/* Page Content */}
         <div className="p-4 lg:p-6">
           {/* Header */}

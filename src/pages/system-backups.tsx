@@ -13,7 +13,6 @@ import {
   Cloud,
   Zap,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Backup {
   id: string;
@@ -166,15 +165,35 @@ const SystemBackupsScreen = () => {
     switch (status) {
       case "completed":
       case "passed":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Completed</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Completed
+          </span>
+        );
       case "in_progress":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>In Progress</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            In Progress
+          </span>
+        );
       case "failed":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Failed</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Failed
+          </span>
+        );
       case "scheduled":
-        return <span className={`${baseClasses} bg-purple-100 text-purple-700`}>Scheduled</span>;
+        return (
+          <span className={`${baseClasses} bg-purple-100 text-purple-700`}>
+            Scheduled
+          </span>
+        );
       default:
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>{status}</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            {status}
+          </span>
+        );
     }
   };
 
@@ -182,25 +201,32 @@ const SystemBackupsScreen = () => {
     const baseClasses = "px-2 py-0.5 text-xs font-medium rounded";
     switch (type) {
       case "full":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>Full</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            Full
+          </span>
+        );
       case "incremental":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Incremental</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Incremental
+          </span>
+        );
       default:
         return null;
     }
   };
 
-  const completedBackups = backups.filter((b) => b.status === "completed").length;
-  const inProgressBackups = backups.filter((b) => b.status === "in_progress").length;
+  const completedBackups = backups.filter(
+    (b) => b.status === "completed",
+  ).length;
+  const inProgressBackups = backups.filter(
+    (b) => b.status === "in_progress",
+  ).length;
   const passedDRTests = drTests.filter((d) => d.status === "passed").length;
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
@@ -252,8 +278,12 @@ const SystemBackupsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Total Backups</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{backups.length}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Total Backups
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {backups.length}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Database className="w-6 h-6 text-blue-600" />
@@ -263,8 +293,12 @@ const SystemBackupsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Completed</p>
-                    <p className="text-2xl font-bold text-green-600 mt-1">{completedBackups}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Completed
+                    </p>
+                    <p className="text-2xl font-bold text-green-600 mt-1">
+                      {completedBackups}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <CheckCircle className="w-6 h-6 text-green-600" />
@@ -274,8 +308,12 @@ const SystemBackupsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">In Progress</p>
-                    <p className="text-2xl font-bold text-blue-600 mt-1">{inProgressBackups}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      In Progress
+                    </p>
+                    <p className="text-2xl font-bold text-blue-600 mt-1">
+                      {inProgressBackups}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <RefreshCw className="w-6 h-6 text-blue-600 animate-spin" />
@@ -285,8 +323,12 @@ const SystemBackupsScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">DR Tests Passed</p>
-                    <p className="text-2xl font-bold text-green-600 mt-1">{passedDRTests}/{drTests.length}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      DR Tests Passed
+                    </p>
+                    <p className="text-2xl font-bold text-green-600 mt-1">
+                      {passedDRTests}/{drTests.length}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <Shield className="w-6 h-6 text-green-600" />
@@ -409,10 +451,16 @@ const SystemBackupsScreen = () => {
                             </td>
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-2">
-                                <button className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Download">
+                                <button
+                                  className="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  title="Download"
+                                >
                                   <Download className="w-4 h-4" />
                                 </button>
-                                <button className="p-2 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Restore">
+                                <button
+                                  className="p-2 text-gray-500 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                                  title="Restore"
+                                >
                                   <Upload className="w-4 h-4" />
                                 </button>
                               </div>
@@ -437,11 +485,18 @@ const SystemBackupsScreen = () => {
                   </div>
                   <div className="divide-y divide-gray-200">
                     {drTests.map((test) => (
-                      <div key={test.id} className="p-6 hover:bg-gray-50 transition-colors">
+                      <div
+                        key={test.id}
+                        className="p-6 hover:bg-gray-50 transition-colors"
+                      >
                         <div className="flex items-start justify-between mb-3">
                           <div>
-                            <h4 className="text-gray-800 font-medium">{test.name}</h4>
-                            <p className="text-sm text-gray-500">Last run: {test.lastRun}</p>
+                            <h4 className="text-gray-800 font-medium">
+                              {test.name}
+                            </h4>
+                            <p className="text-sm text-gray-500">
+                              Last run: {test.lastRun}
+                            </p>
                           </div>
                           <div className="flex items-center gap-2">
                             {getStatusIcon(test.status)}
@@ -451,15 +506,21 @@ const SystemBackupsScreen = () => {
                         <div className="grid grid-cols-3 gap-4 text-sm">
                           <div>
                             <span className="text-gray-500">RPO</span>
-                            <p className="font-medium text-gray-800">{test.rpo}</p>
+                            <p className="font-medium text-gray-800">
+                              {test.rpo}
+                            </p>
                           </div>
                           <div>
                             <span className="text-gray-500">RTO</span>
-                            <p className="font-medium text-gray-800">{test.rto}</p>
+                            <p className="font-medium text-gray-800">
+                              {test.rto}
+                            </p>
                           </div>
                           <div>
                             <span className="text-gray-500">Failover</span>
-                            <p className="font-medium text-gray-800">{test.failoverTime}</p>
+                            <p className="font-medium text-gray-800">
+                              {test.failoverTime}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -475,25 +536,35 @@ const SystemBackupsScreen = () => {
                   <div className="space-y-4">
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-gray-700 font-medium">Primary Region</span>
+                        <span className="text-gray-700 font-medium">
+                          Primary Region
+                        </span>
                         <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
                           Active
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500">US-East-1 (N. Virginia)</p>
+                      <p className="text-sm text-gray-500">
+                        US-East-1 (N. Virginia)
+                      </p>
                     </div>
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-gray-700 font-medium">Secondary Region</span>
+                        <span className="text-gray-700 font-medium">
+                          Secondary Region
+                        </span>
                         <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-medium rounded-full">
                           Standby
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500">US-West-2 (Oregon)</p>
+                      <p className="text-sm text-gray-500">
+                        US-West-2 (Oregon)
+                      </p>
                     </div>
                     <div className="p-4 bg-gray-50 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-gray-700 font-medium">Replication Status</span>
+                        <span className="text-gray-700 font-medium">
+                          Replication Status
+                        </span>
                         <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full">
                           In Sync
                         </span>
@@ -503,9 +574,13 @@ const SystemBackupsScreen = () => {
                     <div className="p-4 bg-blue-50 rounded-lg border border-blue-100">
                       <div className="flex items-center gap-2 mb-2">
                         <Zap className="w-5 h-5 text-blue-600" />
-                        <span className="text-blue-700 font-medium">DR Drill Scheduled</span>
+                        <span className="text-blue-700 font-medium">
+                          DR Drill Scheduled
+                        </span>
                       </div>
-                      <p className="text-sm text-blue-600">January 25, 2024 at 14:00 UTC</p>
+                      <p className="text-sm text-blue-600">
+                        January 25, 2024 at 14:00 UTC
+                      </p>
                     </div>
                   </div>
                 </div>

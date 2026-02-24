@@ -16,7 +16,6 @@ import {
   Play,
   RefreshCw,
 } from "lucide-react";
-import InsuranceSidebar from "../Components/sidebar";
 
 interface Release {
   id: string;
@@ -44,9 +43,9 @@ interface Pipeline {
 
 const SystemReleasesScreen = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<"releases" | "pipelines" | "history">(
-    "releases",
-  );
+  const [activeTab, setActiveTab] = useState<
+    "releases" | "pipelines" | "history"
+  >("releases");
   const [expandedRelease, setExpandedRelease] = useState<string | null>(null);
 
   const releases: Release[] = [
@@ -185,18 +184,42 @@ const SystemReleasesScreen = () => {
     switch (status) {
       case "deployed":
       case "success":
-        return <span className={`${baseClasses} bg-green-100 text-green-700`}>Deployed</span>;
+        return (
+          <span className={`${baseClasses} bg-green-100 text-green-700`}>
+            Deployed
+          </span>
+        );
       case "in_progress":
       case "running":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>In Progress</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            In Progress
+          </span>
+        );
       case "failed":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Failed</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Failed
+          </span>
+        );
       case "scheduled":
-        return <span className={`${baseClasses} bg-purple-100 text-purple-700`}>Scheduled</span>;
+        return (
+          <span className={`${baseClasses} bg-purple-100 text-purple-700`}>
+            Scheduled
+          </span>
+        );
       case "rollback":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>Rolled Back</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            Rolled Back
+          </span>
+        );
       default:
-        return <span className={`${baseClasses} bg-gray-100 text-gray-700`}>{status}</span>;
+        return (
+          <span className={`${baseClasses} bg-gray-100 text-gray-700`}>
+            {status}
+          </span>
+        );
     }
   };
 
@@ -204,27 +227,38 @@ const SystemReleasesScreen = () => {
     const baseClasses = "px-2 py-0.5 text-xs font-medium rounded";
     switch (env) {
       case "production":
-        return <span className={`${baseClasses} bg-red-100 text-red-700`}>Production</span>;
+        return (
+          <span className={`${baseClasses} bg-red-100 text-red-700`}>
+            Production
+          </span>
+        );
       case "staging":
-        return <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>Staging</span>;
+        return (
+          <span className={`${baseClasses} bg-yellow-100 text-yellow-700`}>
+            Staging
+          </span>
+        );
       case "development":
-        return <span className={`${baseClasses} bg-blue-100 text-blue-700`}>Development</span>;
+        return (
+          <span className={`${baseClasses} bg-blue-100 text-blue-700`}>
+            Development
+          </span>
+        );
       default:
         return null;
     }
   };
 
   const deployedCount = releases.filter((r) => r.status === "deployed").length;
-  const inProgressCount = releases.filter((r) => r.status === "in_progress").length;
-  const scheduledCount = releases.filter((r) => r.status === "scheduled").length;
+  const inProgressCount = releases.filter(
+    (r) => r.status === "in_progress",
+  ).length;
+  const scheduledCount = releases.filter(
+    (r) => r.status === "scheduled",
+  ).length;
 
   return (
     <div className="flex min-h-screen bg-white">
-      <InsuranceSidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-
       <div className="flex-1 lg:ml-0">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-blue-100 shadow-sm p-4">
@@ -272,8 +306,12 @@ const SystemReleasesScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Deployed</p>
-                    <p className="text-2xl font-bold text-green-600 mt-1">{deployedCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Deployed
+                    </p>
+                    <p className="text-2xl font-bold text-green-600 mt-1">
+                      {deployedCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                     <CheckCircle className="w-6 h-6 text-green-600" />
@@ -283,8 +321,12 @@ const SystemReleasesScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">In Progress</p>
-                    <p className="text-2xl font-bold text-blue-600 mt-1">{inProgressCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      In Progress
+                    </p>
+                    <p className="text-2xl font-bold text-blue-600 mt-1">
+                      {inProgressCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <RefreshCw className="w-6 h-6 text-blue-600 animate-spin" />
@@ -294,8 +336,12 @@ const SystemReleasesScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Scheduled</p>
-                    <p className="text-2xl font-bold text-purple-600 mt-1">{scheduledCount}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Scheduled
+                    </p>
+                    <p className="text-2xl font-bold text-purple-600 mt-1">
+                      {scheduledCount}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
                     <Calendar className="w-6 h-6 text-purple-600" />
@@ -305,8 +351,12 @@ const SystemReleasesScreen = () => {
               <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-gray-600 text-sm font-medium">Total Releases</p>
-                    <p className="text-2xl font-bold text-gray-800 mt-1">{releases.length}</p>
+                    <p className="text-gray-600 text-sm font-medium">
+                      Total Releases
+                    </p>
+                    <p className="text-2xl font-bold text-gray-800 mt-1">
+                      {releases.length}
+                    </p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                     <Tag className="w-6 h-6 text-blue-600" />
@@ -368,7 +418,9 @@ const SystemReleasesScreen = () => {
                       <div
                         className="px-6 py-4 hover:bg-gray-50 transition-colors cursor-pointer"
                         onClick={() =>
-                          setExpandedRelease(expandedRelease === release.id ? null : release.id)
+                          setExpandedRelease(
+                            expandedRelease === release.id ? null : release.id,
+                          )
                         }
                       >
                         <div className="flex items-start justify-between">
@@ -382,8 +434,12 @@ const SystemReleasesScreen = () => {
                                 {getStatusBadge(release.status)}
                                 {getEnvironmentBadge(release.environment)}
                               </div>
-                              <p className="text-gray-800 font-medium">{release.name}</p>
-                              <p className="text-sm text-gray-500 mt-1">{release.description}</p>
+                              <p className="text-gray-800 font-medium">
+                                {release.name}
+                              </p>
+                              <p className="text-sm text-gray-500 mt-1">
+                                {release.description}
+                              </p>
                               <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
                                 <span className="flex items-center gap-1">
                                   <Calendar className="w-3 h-3" />
@@ -450,7 +506,9 @@ const SystemReleasesScreen = () => {
                       <div className="flex items-start gap-4">
                         {getStatusIcon(pipeline.status)}
                         <div>
-                          <h4 className="text-gray-800 font-medium">{pipeline.name}</h4>
+                          <h4 className="text-gray-800 font-medium">
+                            {pipeline.name}
+                          </h4>
                           <div className="flex items-center gap-3 mt-1">
                             <span className="flex items-center gap-1 text-sm text-gray-500">
                               <GitBranch className="w-4 h-4" />
@@ -476,10 +534,10 @@ const SystemReleasesScreen = () => {
                               stage.status === "success"
                                 ? "bg-green-100 text-green-700"
                                 : stage.status === "running"
-                                ? "bg-blue-100 text-blue-700"
-                                : stage.status === "failed"
-                                ? "bg-red-100 text-red-700"
-                                : "bg-gray-100 text-gray-500"
+                                  ? "bg-blue-100 text-blue-700"
+                                  : stage.status === "failed"
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-gray-100 text-gray-500"
                             }`}
                           >
                             {stage.name}
@@ -502,7 +560,9 @@ const SystemReleasesScreen = () => {
                 </h3>
                 <div className="space-y-4">
                   {releases
-                    .filter((r) => r.status === "deployed" || r.status === "rollback")
+                    .filter(
+                      (r) => r.status === "deployed" || r.status === "rollback",
+                    )
                     .map((release) => (
                       <div
                         key={release.id}
@@ -515,7 +575,9 @@ const SystemReleasesScreen = () => {
                               {release.version}
                             </span>
                             <span className="text-gray-500 mx-2">-</span>
-                            <span className="text-gray-600">{release.name}</span>
+                            <span className="text-gray-600">
+                              {release.name}
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center gap-4">

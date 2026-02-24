@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Shield, Home, Info, Briefcase, Phone, Menu, X } from 'lucide-react';
 
-const Navbar = () => {
+interface NavbarProps {
+  onMenuClick?: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -12,6 +16,14 @@ const Navbar = () => {
     { id: '/services', label: 'Services', icon: Briefcase },
     { id: '/contact', label: 'Contact', icon: Phone }
   ];
+
+  const handleMenuClick = () => {
+    if (onMenuClick) {
+      onMenuClick();
+    } else {
+      setMobileMenuOpen(!mobileMenuOpen);
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
@@ -62,7 +74,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={handleMenuClick}
             className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Toggle menu"
           >
@@ -74,8 +86,8 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
+        {/* Mobile Navigation - only show when onMenuClick is not provided */}
+        {!onMenuClick && mobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col space-y-2">
               {navigationItems.map((item) => {
