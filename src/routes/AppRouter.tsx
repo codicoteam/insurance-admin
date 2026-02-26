@@ -5,6 +5,7 @@ import MainLayout from "../Components/MainLayout";
 import ExecutiveOverview from "../pages/Executive";
 import Dashboard from "../pages/operations";
 import WelcomeScreen from "../pages/welcome";
+import LoginScreen from "../pages/login";
 import AlertsTasksScreen from "../pages/Alerts & Tasks";
 import UsersScreen from "../pages/users";
 import AdminQuotes from "../pages/Quotes";
@@ -66,8 +67,15 @@ export default function AppRouter() {
     <BrowserRouter>
       <SidebarProvider>
         <Routes>
-          {/* Welcome page without sidebar - full page layout */}
+          {/* Public routes without sidebar */}
           <Route path="/" element={<WelcomeScreen />} />
+          <Route path="/login" element={<LoginScreen />} />
+
+          {/* Dashboard routes without sidebar */}
+          <Route path="/dashboard" element={<ExecutiveOverview />} />
+          <Route path="/Executive" element={<ExecutiveOverview />} />
+          <Route path="/dashboard/operational" element={<Dashboard />} />
+          <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
 
           {/* Admin pages with sidebar */}
           <Route element={<MainLayout />}>

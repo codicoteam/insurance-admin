@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Shield, Home, Info, Phone, Briefcase, ChevronRight, 
   Menu, X, Users, Target, Clock, Award, CheckCircle,
@@ -8,6 +9,7 @@ import {
 type Screen = 'home' | 'about' | 'services' | 'contact';
 
 const WelcomeScreen = () => {
+  const navigate = useNavigate();
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -125,11 +127,20 @@ const WelcomeScreen = () => {
               Because your peace of mind is our priority.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold hover:bg-gray-100 transition-all hover:shadow-2xl transform hover:-translate-y-1">
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold hover:bg-gray-100 transition-all hover:shadow-2xl transform hover:-translate-y-1"
+              >
                 Get a Quote
               </button>
-              <button className="px-8 py-4 bg-white/20 backdrop-blur border-2 border-white rounded-xl font-semibold hover:bg-white/30 transition-all hover:shadow-2xl transform hover:-translate-y-1">
-                Explore Products
+              <button 
+                onClick={() => {
+                  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                  navigate(isLoggedIn ? '/dashboard' : '/login');
+                }}
+                className="px-8 py-4 bg-white/20 backdrop-blur border-2 border-white rounded-xl font-semibold hover:bg-white/30 transition-all hover:shadow-2xl transform hover:-translate-y-1"
+              >
+                Executive
               </button>
             </div>
           </div>
@@ -584,7 +595,10 @@ const WelcomeScreen = () => {
 
             {/* Desktop CTA */}
             <div className="hidden lg:block">
-              <button className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl">
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-xl"
+              >
                 Login
               </button>
             </div>
@@ -628,8 +642,11 @@ const WelcomeScreen = () => {
                   );
                 })}
                 <div className="pt-4 border-t border-gray-200">
-                  <button className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium">
-                    Get a Quote
+                  <button 
+                    onClick={() => navigate('/login')}
+                    className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium"
+                  >
+                    Login
                   </button>
                 </div>
               </div>

@@ -35,8 +35,9 @@ import {
   User,
   Download,
   Upload,
-  PieChart,
+  PieChart
 } from "lucide-react";
+import InsuranceSidebar from '../Components/sidebar'; // Adjust the import path as needed
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -584,11 +585,7 @@ const StatusBadge: React.FC<{ status: QuoteStatus }> = ({ status }) => {
 };
 
 const formatCurrency = (n: number) =>
-  new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(n);
+  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
 
 // ─── Analytics Bar Chart ──────────────────────────────────────────────────────
 
@@ -605,17 +602,8 @@ const MiniBarChart: React.FC<{
 
   const maxVal = Math.max(...data.map(getValue));
   const barColors = [
-    "bg-blue-500",
-    "bg-red-500",
-    "bg-indigo-500",
-    "bg-purple-500",
-    "bg-pink-500",
-    "bg-yellow-500",
-    "bg-teal-500",
-    "bg-cyan-500",
-    "bg-slate-500",
-    "bg-orange-500",
-    "bg-green-500",
+    "bg-blue-500","bg-red-500","bg-indigo-500","bg-purple-500","bg-pink-500",
+    "bg-yellow-500","bg-teal-500","bg-cyan-500","bg-slate-500","bg-orange-500","bg-green-500",
   ];
 
   return (
@@ -627,22 +615,18 @@ const MiniBarChart: React.FC<{
           metric === "conversionRate"
             ? `${val}%`
             : metric === "revenue"
-              ? formatCurrency(val)
-              : val.toString();
+            ? formatCurrency(val)
+            : val.toString();
         return (
           <div key={s.source} className="flex items-center gap-2">
-            <span className="text-xs text-gray-500 w-32 shrink-0 truncate">
-              {s.source}
-            </span>
+            <span className="text-xs text-gray-500 w-32 shrink-0 truncate">{s.source}</span>
             <div className="flex-1 bg-gray-100 rounded-full h-5 overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all duration-500 ${barColors[i]}`}
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <span className="text-xs font-semibold text-gray-700 w-20 text-right shrink-0">
-              {label}
-            </span>
+            <span className="text-xs font-semibold text-gray-700 w-20 text-right shrink-0">{label}</span>
           </div>
         );
       })}
@@ -657,14 +641,8 @@ const QuoteModal: React.FC<{
   onSave: (q: Omit<Quote, "id" | "createdAt">) => void;
 }> = ({ onClose, onSave }) => {
   const [form, setForm] = useState<FormData>({
-    client: "",
-    email: "",
-    phone: "",
-    policyType: "Life Insurance",
-    premium: "",
-    leadSource: "",
-    agent: "James Harper",
-    expiresAt: "",
+    client: "", email: "", phone: "", policyType: "Life Insurance",
+    premium: "", leadSource: "", agent: "James Harper", expiresAt: "",
   });
 
   const set = (key: keyof FormData, val: string) =>
@@ -692,10 +670,7 @@ const QuoteModal: React.FC<{
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <h2 className="text-xl font-bold text-gray-900">New Quote</h2>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg hover:bg-gray-100 text-gray-500"
-          >
+          <button onClick={onClose} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
             <X size={20} />
           </button>
         </div>
@@ -703,25 +678,13 @@ const QuoteModal: React.FC<{
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              {
-                label: "Client Name",
-                key: "client",
-                type: "text",
-                required: true,
-              },
+              { label: "Client Name", key: "client", type: "text", required: true },
               { label: "Email", key: "email", type: "email", required: true },
               { label: "Phone", key: "phone", type: "tel", required: false },
-              {
-                label: "Annual Premium ($)",
-                key: "premium",
-                type: "number",
-                required: true,
-              },
+              { label: "Annual Premium ($)", key: "premium", type: "number", required: true },
             ].map(({ label, key, type, required }) => (
               <div key={key}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  {label}
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                 <input
                   type={type}
                   required={required}
@@ -735,20 +698,13 @@ const QuoteModal: React.FC<{
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Policy Type
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Policy Type</label>
               <select
                 value={form.policyType}
                 onChange={(e) => set("policyType", e.target.value)}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {[
-                  "Life Insurance",
-                  "Health Insurance",
-                  "Auto Insurance",
-                  "Property Insurance",
-                ].map((t) => (
+                {["Life Insurance","Health Insurance","Auto Insurance","Property Insurance"].map((t) => (
                   <option key={t}>{t}</option>
                 ))}
               </select>
@@ -766,17 +722,13 @@ const QuoteModal: React.FC<{
               >
                 <option value="">Select source...</option>
                 {LEAD_SOURCES.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
+                  <option key={s} value={s}>{s}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Expiry Date
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
               <input
                 type="date"
                 required
@@ -787,20 +739,13 @@ const QuoteModal: React.FC<{
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Assigned Agent
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Assigned Agent</label>
               <select
                 value={form.agent}
                 onChange={(e) => set("agent", e.target.value)}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {[
-                  "James Harper",
-                  "Sarah Williams",
-                  "Mark Davis",
-                  "Lisa Johnson",
-                ].map((a) => (
+                {["James Harper","Sarah Williams","Mark Davis","Lisa Johnson"].map((a) => (
                   <option key={a}>{a}</option>
                 ))}
               </select>
@@ -839,36 +784,22 @@ export default function InsuranceCRMDashboard() {
   const [pipeline] = useState<PipelineCard[]>(MOCK_PIPELINE);
   const [showModal, setShowModal] = useState(false);
   const [quoteSearch, setQuoteSearch] = useState("");
-  const [quoteSourceFilter, setQuoteSourceFilter] = useState<LeadSource | "">(
-    "",
-  );
-  const [quoteStatusFilter, setQuoteStatusFilter] = useState<QuoteStatus | "">(
-    "",
-  );
-  const [pipelineSourceFilter, setPipelineSourceFilter] = useState<
-    LeadSource | ""
-  >("");
-  const [pipelineStageFilter, setPipelineStageFilter] = useState<
-    PipelineStage | ""
-  >("");
+  const [quoteSourceFilter, setQuoteSourceFilter] = useState<LeadSource | "">("");
+  const [quoteStatusFilter, setQuoteStatusFilter] = useState<QuoteStatus | "">("");
+  const [pipelineSourceFilter, setPipelineSourceFilter] = useState<LeadSource | "">("");
+  const [pipelineStageFilter, setPipelineStageFilter] = useState<PipelineStage | "">("");
   const [analyticsMetric, setAnalyticsMetric] = useState<
     "totalLeads" | "conversionRate" | "revenue"
   >("totalLeads");
 
   // Computed totals
   const totalPremium = useMemo(
-    () =>
-      quotes
-        .filter((q) => q.status === "Approved")
-        .reduce((s, q) => s + q.premium, 0),
-    [quotes],
+    () => quotes.filter((q) => q.status === "Approved").reduce((s, q) => s + q.premium, 0),
+    [quotes]
   );
   const totalPipelineValue = useMemo(
-    () =>
-      pipeline
-        .filter((p) => p.stage !== "Closed Lost")
-        .reduce((s, p) => s + p.value, 0),
-    [pipeline],
+    () => pipeline.filter((p) => p.stage !== "Closed Lost").reduce((s, p) => s + p.value, 0),
+    [pipeline]
   );
   const conversionRate = useMemo(() => {
     const approved = quotes.filter((q) => q.status === "Approved").length;
@@ -877,60 +808,50 @@ export default function InsuranceCRMDashboard() {
 
   // Stats for the header
   const stats = [
-    {
-      label: "Total Quotes",
-      value: quotes.length,
-      sub: `${quotes.filter((q) => q.status === "Approved").length} approved`,
-      icon: FileText,
-      color: "blue",
-      trend: "+12%",
-      trendUp: true,
+    { 
+      label: 'Total Quotes', 
+      value: quotes.length, 
+      sub: `${quotes.filter((q) => q.status === "Approved").length} approved`, 
+      icon: FileText, 
+      color: 'blue',
+      trend: '+12%',
+      trendUp: true
     },
-    {
-      label: "Approved Revenue",
-      value: formatCurrency(totalPremium),
-      sub: "Annual premium",
-      icon: DollarSign,
-      color: "green",
-      trend: "+8%",
-      trendUp: true,
+    { 
+      label: 'Approved Revenue', 
+      value: formatCurrency(totalPremium), 
+      sub: 'Annual premium', 
+      icon: DollarSign, 
+      color: 'green',
+      trend: '+8%',
+      trendUp: true
     },
-    {
-      label: "Pipeline Value",
-      value: formatCurrency(totalPipelineValue),
-      sub: `${pipeline.filter((p) => p.stage !== "Closed Lost" && p.stage !== "Closed Won").length} active deals`,
-      icon: TrendingUp,
-      color: "purple",
-      trend: "+21%",
-      trendUp: true,
+    { 
+      label: 'Pipeline Value', 
+      value: formatCurrency(totalPipelineValue), 
+      sub: `${pipeline.filter((p) => p.stage !== "Closed Lost" && p.stage !== "Closed Won").length} active deals`, 
+      icon: TrendingUp, 
+      color: 'purple',
+      trend: '+21%',
+      trendUp: true
     },
-    {
-      label: "Conversion Rate",
-      value: `${conversionRate}%`,
-      sub: "Quotes → Approved",
-      icon: Users,
-      color: "orange",
-      trend: "-3%",
-      trendUp: false,
-    },
+    { 
+      label: 'Conversion Rate', 
+      value: `${conversionRate}%`, 
+      sub: 'Quotes → Approved', 
+      icon: Users, 
+      color: 'orange',
+      trend: '-3%',
+      trendUp: false
+    }
   ];
 
   // Quick action buttons
   const actionButtons = [
-    {
-      icon: Plus,
-      label: "New Quote",
-      onClick: () => setShowModal(true),
-      color: "blue",
-    },
-    { icon: Download, label: "Export", onClick: () => {}, color: "green" },
-    { icon: Upload, label: "Import", onClick: () => {}, color: "purple" },
-    {
-      icon: PieChart,
-      label: "Reports",
-      onClick: () => setActiveTab("analytics"),
-      color: "orange",
-    },
+    { icon: Plus, label: 'New Quote', onClick: () => setShowModal(true), color: 'blue' },
+    { icon: Download, label: 'Export', onClick: () => {}, color: 'green' },
+    { icon: Upload, label: 'Import', onClick: () => {}, color: 'purple' },
+    { icon: PieChart, label: 'Reports', onClick: () => setActiveTab('analytics'), color: 'orange' }
   ];
 
   // Filtered quotes
@@ -941,38 +862,31 @@ export default function InsuranceCRMDashboard() {
           q.client.toLowerCase().includes(quoteSearch.toLowerCase()) ||
           q.email.toLowerCase().includes(quoteSearch.toLowerCase()) ||
           q.id.toLowerCase().includes(quoteSearch.toLowerCase());
-        const matchSource =
-          !quoteSourceFilter || q.leadSource === quoteSourceFilter;
-        const matchStatus =
-          !quoteStatusFilter || q.status === quoteStatusFilter;
+        const matchSource = !quoteSourceFilter || q.leadSource === quoteSourceFilter;
+        const matchStatus = !quoteStatusFilter || q.status === quoteStatusFilter;
         return matchSearch && matchSource && matchStatus;
       }),
-    [quotes, quoteSearch, quoteSourceFilter, quoteStatusFilter],
+    [quotes, quoteSearch, quoteSourceFilter, quoteStatusFilter]
   );
 
   // Filtered pipeline grouped by stage
   const filteredPipeline = useMemo(
     () =>
       pipeline.filter((p) => {
-        const matchSource =
-          !pipelineSourceFilter || p.leadSource === pipelineSourceFilter;
-        const matchStage =
-          !pipelineStageFilter || p.stage === pipelineStageFilter;
+        const matchSource = !pipelineSourceFilter || p.leadSource === pipelineSourceFilter;
+        const matchStage = !pipelineStageFilter || p.stage === pipelineStageFilter;
         return matchSource && matchStage;
       }),
-    [pipeline, pipelineSourceFilter, pipelineStageFilter],
+    [pipeline, pipelineSourceFilter, pipelineStageFilter]
   );
 
   const pipelineByStage = useMemo(
     () =>
-      PIPELINE_STAGES.reduce<Record<PipelineStage, PipelineCard[]>>(
-        (acc, stage) => {
-          acc[stage] = filteredPipeline.filter((p) => p.stage === stage);
-          return acc;
-        },
-        {} as Record<PipelineStage, PipelineCard[]>,
-      ),
-    [filteredPipeline],
+      PIPELINE_STAGES.reduce<Record<PipelineStage, PipelineCard[]>>((acc, stage) => {
+        acc[stage] = filteredPipeline.filter((p) => p.stage === stage);
+        return acc;
+      }, {} as Record<PipelineStage, PipelineCard[]>),
+    [filteredPipeline]
   );
 
   const handleAddQuote = (data: Omit<Quote, "id" | "createdAt">) => {
@@ -1006,13 +920,13 @@ export default function InsuranceCRMDashboard() {
 
   return (
     <div className="flex min-h-screen bg-white">
+      {/* Sidebar */}
+      <InsuranceSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
       <div className="flex-1">
         {/* Mobile Header */}
         <div className="lg:hidden bg-white border-b border-gray-200 p-4">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg hover:bg-gray-100"
-          >
+          <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-lg hover:bg-gray-100">
             <Filter className="w-6 h-6 text-gray-600" />
           </button>
         </div>
@@ -1026,12 +940,8 @@ export default function InsuranceCRMDashboard() {
                   <Shield className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">
-                    Insurance CRM Dashboard
-                  </h1>
-                  <p className="text-sm text-gray-600">
-                    Manage quotes, track pipeline, and analyze lead performance
-                  </p>
+                  <h1 className="text-2xl font-bold text-gray-900">Insurance CRM Dashboard</h1>
+                  <p className="text-sm text-gray-600">Manage quotes, track pipeline, and analyze lead performance</p>
                 </div>
               </div>
             </div>
@@ -1043,31 +953,22 @@ export default function InsuranceCRMDashboard() {
               {stats.map((stat, idx) => {
                 const Icon = stat.icon;
                 const colorClasses = {
-                  blue: "bg-blue-50 text-blue-600",
-                  green: "bg-green-50 text-green-600",
-                  purple: "bg-purple-50 text-purple-600",
-                  orange: "bg-orange-50 text-orange-600",
-                  red: "bg-red-50 text-red-600",
+                  blue: 'bg-blue-50 text-blue-600',
+                  green: 'bg-green-50 text-green-600',
+                  purple: 'bg-purple-50 text-purple-600',
+                  orange: 'bg-orange-50 text-orange-600',
+                  red: 'bg-red-50 text-red-600'
                 };
                 return (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-xl p-5 shadow-sm border border-blue-100"
-                  >
+                  <div key={idx} className="bg-white rounded-xl p-5 shadow-sm border border-blue-100">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-sm text-gray-600 mb-1">
-                          {stat.label}
-                        </p>
-                        <p className="text-2xl font-bold text-gray-900">
-                          {stat.value}
-                        </p>
+                        <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
+                        <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
                         <p className="text-xs text-gray-400 mt-1">{stat.sub}</p>
                       </div>
                       <div className="flex flex-col items-end gap-1">
-                        <div
-                          className={`p-3 rounded-lg ${colorClasses[stat.color as keyof typeof colorClasses]}`}
-                        >
+                        <div className={`p-3 rounded-lg ${colorClasses[stat.color as keyof typeof colorClasses]}`}>
                           <Icon size={20} />
                         </div>
                         <span
@@ -1075,11 +976,7 @@ export default function InsuranceCRMDashboard() {
                             stat.trendUp ? "text-green-600" : "text-red-500"
                           }`}
                         >
-                          {stat.trendUp ? (
-                            <ArrowUpRight size={13} />
-                          ) : (
-                            <ArrowDownRight size={13} />
-                          )}
+                          {stat.trendUp ? <ArrowUpRight size={13} /> : <ArrowDownRight size={13} />}
                           {stat.trend}
                         </span>
                       </div>
@@ -1091,17 +988,15 @@ export default function InsuranceCRMDashboard() {
 
             {/* Quick Actions */}
             <div className="mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                Quick Actions
-              </h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {actionButtons.map((action, idx) => {
                   const Icon = action.icon;
                   const colorClasses: Record<string, string> = {
-                    blue: "from-blue-500 to-blue-600",
-                    green: "from-green-500 to-green-600",
-                    purple: "from-purple-500 to-purple-600",
-                    orange: "from-orange-500 to-orange-600",
+                    blue: 'from-blue-500 to-blue-600',
+                    green: 'from-green-500 to-green-600',
+                    purple: 'from-purple-500 to-purple-600',
+                    orange: 'from-orange-500 to-orange-600'
                   };
                   return (
                     <button
@@ -1110,9 +1005,7 @@ export default function InsuranceCRMDashboard() {
                       className={`flex flex-col items-center justify-center gap-2 p-4 bg-gradient-to-br ${colorClasses[action.color as keyof typeof colorClasses]} text-white rounded-xl shadow hover:shadow-lg transition-all transform hover:-translate-y-0.5`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span className="text-xs font-semibold text-center">
-                        {action.label}
-                      </span>
+                      <span className="text-xs font-semibold text-center">{action.label}</span>
                     </button>
                   );
                 })}
@@ -1131,11 +1024,7 @@ export default function InsuranceCRMDashboard() {
                       : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
                   }`}
                 >
-                  {tab === "analytics"
-                    ? "Lead Analytics"
-                    : tab === "pipeline"
-                      ? "Sales Pipeline"
-                      : "Quotes"}
+                  {tab === "analytics" ? "Lead Analytics" : tab === "pipeline" ? "Sales Pipeline" : "Quotes"}
                 </button>
               ))}
             </div>
@@ -1159,36 +1048,22 @@ export default function InsuranceCRMDashboard() {
                     <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                     <select
                       value={quoteSourceFilter}
-                      onChange={(e) =>
-                        setQuoteSourceFilter(e.target.value as LeadSource | "")
-                      }
+                      onChange={(e) => setQuoteSourceFilter(e.target.value as LeadSource | "")}
                       className="pl-9 pr-8 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
                     >
                       <option value="">All Sources</option>
-                      {LEAD_SOURCES.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
+                      {LEAD_SOURCES.map((s) => <option key={s}>{s}</option>)}
                     </select>
                     <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                   </div>
                   <div className="relative">
                     <select
                       value={quoteStatusFilter}
-                      onChange={(e) =>
-                        setQuoteStatusFilter(e.target.value as QuoteStatus | "")
-                      }
+                      onChange={(e) => setQuoteStatusFilter(e.target.value as QuoteStatus | "")}
                       className="pl-3 pr-8 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
                     >
                       <option value="">All Statuses</option>
-                      {(
-                        [
-                          "Draft",
-                          "Sent",
-                          "Approved",
-                          "Rejected",
-                          "Expired",
-                        ] as QuoteStatus[]
-                      ).map((s) => (
+                      {(["Draft","Sent","Approved","Rejected","Expired"] as QuoteStatus[]).map((s) => (
                         <option key={s}>{s}</option>
                       ))}
                     </select>
@@ -1204,19 +1079,15 @@ export default function InsuranceCRMDashboard() {
                         <div className="p-4 bg-gray-100 rounded-full">
                           <Search className="w-8 h-8 text-gray-400" />
                         </div>
-                        <p className="text-gray-500 font-medium">
-                          No quotes found
-                        </p>
-                        <p className="text-sm text-gray-400">
-                          Try adjusting your search or filters
-                        </p>
+                        <p className="text-gray-500 font-medium">No quotes found</p>
+                        <p className="text-sm text-gray-400">Try adjusting your search or filters</p>
                       </div>
                     </div>
                   ) : (
                     filteredQuotes.map((quote) => {
                       const SourceIcon = LEAD_SOURCE_ICONS[quote.leadSource];
                       const sourceColors = LEAD_SOURCE_COLORS[quote.leadSource];
-
+                      
                       return (
                         <div
                           key={quote.id}
@@ -1229,12 +1100,8 @@ export default function InsuranceCRMDashboard() {
                                 <FileText className="w-5 h-5" />
                               </div>
                               <div>
-                                <span className="text-xs font-mono font-semibold text-blue-600">
-                                  {quote.id}
-                                </span>
-                                <h3 className="font-bold text-gray-900">
-                                  {quote.client}
-                                </h3>
+                                <span className="text-xs font-mono font-semibold text-blue-600">{quote.id}</span>
+                                <h3 className="font-bold text-gray-900">{quote.client}</h3>
                               </div>
                             </div>
                             <div className="flex gap-1">
@@ -1245,11 +1112,7 @@ export default function InsuranceCRMDashboard() {
                                 <Edit2 size={14} />
                               </button>
                               <button
-                                onClick={() =>
-                                  setQuotes((p) =>
-                                    p.filter((x) => x.id !== quote.id),
-                                  )
-                                }
+                                onClick={() => setQuotes((p) => p.filter((x) => x.id !== quote.id))}
                                 className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                               >
                                 <Trash2 size={14} />
@@ -1259,17 +1122,10 @@ export default function InsuranceCRMDashboard() {
 
                           {/* Policy type and status */}
                           <div className="flex items-center gap-2 mb-3">
-                            <div
-                              className={`p-1.5 rounded-lg ${sourceColors.bg}`}
-                            >
-                              <SourceIcon
-                                className={sourceColors.text}
-                                size={14}
-                              />
+                            <div className={`p-1.5 rounded-lg ${sourceColors.bg}`}>
+                              <SourceIcon className={sourceColors.text} size={14} />
                             </div>
-                            <span className="text-sm text-gray-600 flex-1">
-                              {quote.policyType}
-                            </span>
+                            <span className="text-sm text-gray-600 flex-1">{quote.policyType}</span>
                             <StatusBadge status={quote.status} />
                           </div>
 
@@ -1277,37 +1133,25 @@ export default function InsuranceCRMDashboard() {
                           <div className="space-y-2 text-sm border-t border-gray-100 pt-3 mt-2">
                             <div className="flex items-center gap-2">
                               <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              <span className="text-gray-600 text-xs truncate">
-                                {quote.email}
-                              </span>
+                              <span className="text-gray-600 text-xs truncate">{quote.email}</span>
                             </div>
                             <div className="flex items-center gap-2">
                               <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                              <span className="text-gray-600 text-xs">
-                                {quote.phone}
-                              </span>
+                              <span className="text-gray-600 text-xs">{quote.phone}</span>
                             </div>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-2">
                                 <DollarSign className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                                <span className="font-bold text-gray-900">
-                                  {formatCurrency(quote.premium)}
-                                </span>
+                                <span className="font-bold text-gray-900">{formatCurrency(quote.premium)}</span>
                               </div>
                               <div className="flex items-center gap-2">
                                 <User className="w-4 h-4 text-gray-400 flex-shrink-0" />
-                                <span className="text-xs text-gray-500">
-                                  {quote.agent}
-                                </span>
+                                <span className="text-xs text-gray-500">{quote.agent}</span>
                               </div>
                             </div>
                             <div className="flex items-center justify-between text-xs">
-                              <span className="text-gray-400">
-                                Expires: {quote.expiresAt}
-                              </span>
-                              <span className="text-gray-400">
-                                Created: {quote.createdAt}
-                              </span>
+                              <span className="text-gray-400">Expires: {quote.expiresAt}</span>
+                              <span className="text-gray-400">Created: {quote.createdAt}</span>
                             </div>
                           </div>
                         </div>
@@ -1318,9 +1162,7 @@ export default function InsuranceCRMDashboard() {
 
                 {/* Footer */}
                 <div className="flex items-center justify-between text-xs text-gray-400 py-2">
-                  <span>
-                    Showing {filteredQuotes.length} of {quotes.length} quotes
-                  </span>
+                  <span>Showing {filteredQuotes.length} of {quotes.length} quotes</span>
                   <span>Page 1 of 1</span>
                 </div>
               </div>
@@ -1335,43 +1177,27 @@ export default function InsuranceCRMDashboard() {
                     <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                     <select
                       value={pipelineSourceFilter}
-                      onChange={(e) =>
-                        setPipelineSourceFilter(
-                          e.target.value as LeadSource | "",
-                        )
-                      }
+                      onChange={(e) => setPipelineSourceFilter(e.target.value as LeadSource | "")}
                       className="pl-9 pr-8 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
                     >
                       <option value="">All Sources</option>
-                      {LEAD_SOURCES.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
+                      {LEAD_SOURCES.map((s) => <option key={s}>{s}</option>)}
                     </select>
                     <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                   </div>
                   <div className="relative">
                     <select
                       value={pipelineStageFilter}
-                      onChange={(e) =>
-                        setPipelineStageFilter(
-                          e.target.value as PipelineStage | "",
-                        )
-                      }
+                      onChange={(e) => setPipelineStageFilter(e.target.value as PipelineStage | "")}
                       className="pl-3 pr-8 py-2.5 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
                     >
                       <option value="">All Stages</option>
-                      {PIPELINE_STAGES.map((s) => (
-                        <option key={s}>{s}</option>
-                      ))}
+                      {PIPELINE_STAGES.map((s) => <option key={s}>{s}</option>)}
                     </select>
                     <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                   </div>
                   <span className="self-center text-xs text-gray-400 ml-2">
-                    {filteredPipeline.length} deals ·{" "}
-                    {formatCurrency(
-                      filteredPipeline.reduce((a, p) => a + p.value, 0),
-                    )}{" "}
-                    total value
+                    {filteredPipeline.length} deals · {formatCurrency(filteredPipeline.reduce((a, p) => a + p.value, 0))} total value
                   </span>
                 </div>
 
@@ -1380,39 +1206,25 @@ export default function InsuranceCRMDashboard() {
                   {PIPELINE_STAGES.map((stage) => {
                     const cards = pipelineByStage[stage];
                     const stageValue = cards.reduce((s, c) => s + c.value, 0);
-                    const StageIcon =
-                      stage === "Closed Won"
-                        ? CheckCircle
-                        : stage === "Closed Lost"
-                          ? XCircle
-                          : stage === "New Lead"
-                            ? User
-                            : stage === "Contacted"
-                              ? Phone
-                              : stage === "Qualified"
-                                ? UserCheck
-                                : stage === "Proposal Sent"
-                                  ? FileText
-                                  : TrendingUp;
-
+                    const StageIcon = stage === 'Closed Won' ? CheckCircle :
+                                     stage === 'Closed Lost' ? XCircle :
+                                     stage === 'New Lead' ? User :
+                                     stage === 'Contacted' ? Phone :
+                                     stage === 'Qualified' ? UserCheck :
+                                     stage === 'Proposal Sent' ? FileText : TrendingUp;
+                    
                     return (
                       <div key={stage} className="flex flex-col gap-2">
                         {/* Column header */}
-                        <div
-                          className={`rounded-xl p-4 text-white ${STAGE_HEADER_COLORS[stage]} shadow-sm`}
-                        >
+                        <div className={`rounded-xl p-4 text-white ${STAGE_HEADER_COLORS[stage]} shadow-sm`}>
                           <div className="flex items-center gap-2 mb-2">
                             <StageIcon size={16} />
-                            <span className="text-xs font-bold uppercase tracking-wide flex-1">
-                              {stage}
-                            </span>
+                            <span className="text-xs font-bold uppercase tracking-wide flex-1">{stage}</span>
                             <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                               {cards.length}
                             </span>
                           </div>
-                          <p className="text-sm font-bold">
-                            {formatCurrency(stageValue)}
-                          </p>
+                          <p className="text-sm font-bold">{formatCurrency(stageValue)}</p>
                         </div>
 
                         {/* Cards */}
@@ -1423,46 +1235,30 @@ export default function InsuranceCRMDashboard() {
                               className={`rounded-xl p-4 border-2 shadow-sm hover:shadow-md transition-all cursor-default ${STAGE_COLORS[stage]}`}
                             >
                               <div className="flex items-start justify-between mb-2">
-                                <p className="font-bold text-gray-900 text-sm leading-tight">
-                                  {card.client}
-                                </p>
+                                <p className="font-bold text-gray-900 text-sm leading-tight">{card.client}</p>
                                 <div className="flex items-center gap-1">
-                                  <span className="text-xs font-bold text-gray-600">
-                                    {card.probability}%
-                                  </span>
+                                  <span className="text-xs font-bold text-gray-600">{card.probability}%</span>
                                 </div>
                               </div>
 
                               <div className="mb-2">
-                                <LeadSourceBadge
-                                  source={card.leadSource}
-                                  size="sm"
-                                />
+                                <LeadSourceBadge source={card.leadSource} size="sm" />
                               </div>
 
-                              <p className="text-xs text-gray-500 mb-2">
-                                {card.policyType}
-                              </p>
+                              <p className="text-xs text-gray-500 mb-2">{card.policyType}</p>
 
                               <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm font-bold text-gray-800">
-                                  {formatCurrency(card.value)}
-                                </span>
-                                <span className="text-xs px-2 py-0.5 bg-white/60 rounded-full">
-                                  {card.daysInStage}d
-                                </span>
+                                <span className="text-sm font-bold text-gray-800">{formatCurrency(card.value)}</span>
+                                <span className="text-xs px-2 py-0.5 bg-white/60 rounded-full">{card.daysInStage}d</span>
                               </div>
 
                               <div className="pt-2 border-t border-white/60">
                                 <p className="text-xs text-gray-600 truncate">
-                                  <span className="font-medium">Next:</span>{" "}
-                                  {card.nextAction}
+                                  <span className="font-medium">Next:</span> {card.nextAction}
                                 </p>
                                 <div className="flex items-center gap-1 mt-1">
                                   <User className="w-3 h-3 text-gray-400" />
-                                  <p className="text-xs text-gray-500">
-                                    {card.agent}
-                                  </p>
+                                  <p className="text-xs text-gray-500">{card.agent}</p>
                                 </div>
                               </div>
                             </div>
@@ -1486,25 +1282,19 @@ export default function InsuranceCRMDashboard() {
               <div className="space-y-6">
                 {/* Metric selector */}
                 <div className="flex gap-1 bg-white border border-gray-100 rounded-xl p-1 w-fit shadow-sm">
-                  {(["totalLeads", "conversionRate", "revenue"] as const).map(
-                    (m) => (
-                      <button
-                        key={m}
-                        onClick={() => setAnalyticsMetric(m)}
-                        className={`px-4 py-2 rounded-lg text-sm font-semibold capitalize transition-all ${
-                          analyticsMetric === m
-                            ? "bg-blue-600 text-white shadow-sm"
-                            : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {m === "totalLeads"
-                          ? "Total Leads"
-                          : m === "conversionRate"
-                            ? "Conversion Rate"
-                            : "Revenue"}
-                      </button>
-                    ),
-                  )}
+                  {(["totalLeads","conversionRate","revenue"] as const).map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => setAnalyticsMetric(m)}
+                      className={`px-4 py-2 rounded-lg text-sm font-semibold capitalize transition-all ${
+                        analyticsMetric === m
+                          ? "bg-blue-600 text-white shadow-sm"
+                          : "text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      {m === "totalLeads" ? "Total Leads" : m === "conversionRate" ? "Conversion Rate" : "Revenue"}
+                    </button>
+                  ))}
                 </div>
 
                 {/* Chart + top stats */}
@@ -1517,8 +1307,8 @@ export default function InsuranceCRMDashboard() {
                         {analyticsMetric === "totalLeads"
                           ? "Total Leads by Source"
                           : analyticsMetric === "conversionRate"
-                            ? "Conversion Rate by Source"
-                            : "Revenue by Source"}
+                          ? "Conversion Rate by Source"
+                          : "Revenue by Source"}
                       </h2>
                     </div>
                     <MiniBarChart data={MOCK_STATS} metric={analyticsMetric} />
@@ -1526,19 +1316,13 @@ export default function InsuranceCRMDashboard() {
 
                   {/* Top sources */}
                   <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                    <h2 className="text-lg font-bold text-gray-900 mb-4">
-                      Top Performers
-                    </h2>
+                    <h2 className="text-lg font-bold text-gray-900 mb-4">Top Performers</h2>
                     <div className="space-y-3">
                       {[...MOCK_STATS]
                         .sort((a, b) => {
-                          if (analyticsMetric === "totalLeads")
-                            return b.totalLeads - a.totalLeads;
+                          if (analyticsMetric === "totalLeads") return b.totalLeads - a.totalLeads;
                           if (analyticsMetric === "conversionRate")
-                            return (
-                              b.converted / b.totalLeads -
-                              a.converted / a.totalLeads
-                            );
+                            return b.converted / b.totalLeads - a.converted / a.totalLeads;
                           return b.revenue - a.revenue;
                         })
                         .slice(0, 5)
@@ -1549,25 +1333,16 @@ export default function InsuranceCRMDashboard() {
                             analyticsMetric === "totalLeads"
                               ? s.totalLeads
                               : analyticsMetric === "conversionRate"
-                                ? `${Math.round((s.converted / s.totalLeads) * 100)}%`
-                                : formatCurrency(s.revenue);
+                              ? `${Math.round((s.converted / s.totalLeads) * 100)}%`
+                              : formatCurrency(s.revenue);
                           return (
-                            <div
-                              key={s.source}
-                              className="flex items-center gap-3"
-                            >
-                              <span className="text-xs font-bold text-gray-400 w-4">
-                                {i + 1}
-                              </span>
+                            <div key={s.source} className="flex items-center gap-3">
+                              <span className="text-xs font-bold text-gray-400 w-4">{i + 1}</span>
                               <div className={`p-1.5 rounded-lg ${colors.bg}`}>
                                 <Icon className={`${colors.text}`} size={14} />
                               </div>
-                              <span className="flex-1 text-sm text-gray-700 font-medium">
-                                {s.source}
-                              </span>
-                              <span className="text-sm font-bold text-gray-900">
-                                {val}
-                              </span>
+                              <span className="flex-1 text-sm text-gray-700 font-medium">{s.source}</span>
+                              <span className="text-sm font-bold text-gray-900">{val}</span>
                             </div>
                           );
                         })}
@@ -1578,26 +1353,14 @@ export default function InsuranceCRMDashboard() {
                 {/* Full source table */}
                 <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                   <div className="px-6 py-4 border-b border-gray-200">
-                    <h2 className="text-lg font-bold text-gray-900">
-                      Full Lead Source Breakdown
-                    </h2>
+                    <h2 className="text-lg font-bold text-gray-900">Full Lead Source Breakdown</h2>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="bg-gray-50 text-left">
-                          {[
-                            "Source",
-                            "Total Leads",
-                            "Converted",
-                            "Conversion Rate",
-                            "Revenue",
-                            "Avg. Deal Value",
-                          ].map((h) => (
-                            <th
-                              key={h}
-                              className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap"
-                            >
+                          {["Source","Total Leads","Converted","Conversion Rate","Revenue","Avg. Deal Value"].map((h) => (
+                            <th key={h} className="px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap">
                               {h}
                             </th>
                           ))}
@@ -1605,38 +1368,22 @@ export default function InsuranceCRMDashboard() {
                       </thead>
                       <tbody className="divide-y divide-gray-100">
                         {MOCK_STATS.map((s) => {
-                          const rate = Math.round(
-                            (s.converted / s.totalLeads) * 100,
-                          );
-                          const avg =
-                            s.converted > 0
-                              ? Math.round(s.revenue / s.converted)
-                              : 0;
+                          const rate = Math.round((s.converted / s.totalLeads) * 100);
+                          const avg = s.converted > 0 ? Math.round(s.revenue / s.converted) : 0;
                           const colors = LEAD_SOURCE_COLORS[s.source];
                           const Icon = LEAD_SOURCE_ICONS[s.source];
                           return (
-                            <tr
-                              key={s.source}
-                              className="hover:bg-blue-50/30 transition-colors"
-                            >
+                            <tr key={s.source} className="hover:bg-blue-50/30 transition-colors">
                               <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
-                                  <div
-                                    className={`p-1.5 rounded-lg ${colors.bg}`}
-                                  >
+                                  <div className={`p-1.5 rounded-lg ${colors.bg}`}>
                                     <Icon className={colors.text} size={14} />
                                   </div>
-                                  <span className="font-semibold text-gray-800">
-                                    {s.source}
-                                  </span>
+                                  <span className="font-semibold text-gray-800">{s.source}</span>
                                 </div>
                               </td>
-                              <td className="px-4 py-3 text-gray-700">
-                                {s.totalLeads}
-                              </td>
-                              <td className="px-4 py-3 text-gray-700">
-                                {s.converted}
-                              </td>
+                              <td className="px-4 py-3 text-gray-700">{s.totalLeads}</td>
+                              <td className="px-4 py-3 text-gray-700">{s.converted}</td>
                               <td className="px-4 py-3">
                                 <div className="flex items-center gap-2">
                                   <div className="w-16 bg-gray-100 rounded-full h-1.5">
@@ -1645,17 +1392,11 @@ export default function InsuranceCRMDashboard() {
                                       style={{ width: `${rate}%` }}
                                     />
                                   </div>
-                                  <span className="font-semibold text-gray-800">
-                                    {rate}%
-                                  </span>
+                                  <span className="font-semibold text-gray-800">{rate}%</span>
                                 </div>
                               </td>
-                              <td className="px-4 py-3 font-semibold text-gray-800">
-                                {formatCurrency(s.revenue)}
-                              </td>
-                              <td className="px-4 py-3 text-gray-700">
-                                {formatCurrency(avg)}
-                              </td>
+                              <td className="px-4 py-3 font-semibold text-gray-800">{formatCurrency(s.revenue)}</td>
+                              <td className="px-4 py-3 text-gray-700">{formatCurrency(avg)}</td>
                             </tr>
                           );
                         })}
@@ -1670,31 +1411,21 @@ export default function InsuranceCRMDashboard() {
             <div className="mt-8 flex items-start gap-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
               <Info className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
               <p className="text-blue-900 text-sm">
-                This CRM dashboard provides a comprehensive view of your
-                insurance sales pipeline. Track quotes, monitor deal progression
-                through stages, and analyze lead source performance. Use the
-                quick actions to create new quotes or generate reports.
+                This CRM dashboard provides a comprehensive view of your insurance sales pipeline. 
+                Track quotes, monitor deal progression through stages, and analyze lead source performance. 
+                Use the quick actions to create new quotes or generate reports.
               </p>
             </div>
 
             {/* Footer */}
             <p className="text-center text-xs text-gray-400 pb-4">
-              Insurance CRM · Admin Dashboard ·{" "}
-              {new Date().toLocaleDateString("en-US", {
-                month: "long",
-                year: "numeric",
-              })}
+              Insurance CRM · Admin Dashboard · {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
             </p>
           </div>
         </div>
       </div>
 
-      {showModal && (
-        <QuoteModal
-          onClose={() => setShowModal(false)}
-          onSave={handleAddQuote}
-        />
-      )}
+      {showModal && <QuoteModal onClose={() => setShowModal(false)} onSave={handleAddQuote} />}
     </div>
   );
 }
