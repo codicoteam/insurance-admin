@@ -59,7 +59,12 @@ const InsuranceSidebar: React.FC<InsuranceSidebarProps> = ({
       label: "Home & Dashboards",
       icon: Home,
       children: [
-        { id: "executive-overview", label: "Executive Overview", path: "/" },
+        { id: "dashboard", label: "Dashboard", path: "/dashboard" },
+        {
+          id: "executive-overview",
+          label: "Executive Overview",
+          path: "/dashboard/executive",
+        },
         {
           id: "operational",
           label: "Operational Dashboards",

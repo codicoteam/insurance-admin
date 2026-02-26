@@ -1,4 +1,34 @@
-const Dashboard = () => {
+import React, { useState } from "react";
+import {
+  TrendingUp,
+  TrendingDown,
+  FileText,
+  Shield,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  DollarSign,
+  Activity,
+} from "lucide-react";
+import {
+  ResponsiveContainer,
+  BarChart,
+  AreaChart,
+  PieChart,
+  LineChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  Bar,
+  Area,
+  Pie,
+  Cell,
+  Line,
+} from "recharts";
+
+const Operations = () => {
   const [timeRange, setTimeRange] = useState("7d");
 
   // Quotes to Bind Funnel Data
@@ -126,7 +156,7 @@ const Dashboard = () => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-              Operational Dashboard
+              Operational Operations
             </h1>
             <p className="text-gray-600 mt-1">
               Real-time insurance operations monitoring
@@ -523,4 +553,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Operations;

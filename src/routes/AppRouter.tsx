@@ -61,6 +61,7 @@ import PricingFactors from "../pages/pricing-factors";
 import PricingExperiments from "../pages/pricing-experiments";
 import PricingSimulation from "../pages/pricing-simulation";
 import PricingVersioning from "../pages/pricing-versioning";
+import Operations from "../pages/operations";
 
 export default function AppRouter() {
   return (
@@ -71,19 +72,15 @@ export default function AppRouter() {
           <Route path="/" element={<WelcomeScreen />} />
           <Route path="/login" element={<LoginScreen />} />
 
-          {/* Dashboard routes without sidebar */}
-          <Route path="/dashboard" element={<ExecutiveOverview />} />
-          <Route path="/Executive" element={<ExecutiveOverview />} />
-          <Route path="/dashboard/operational" element={<Dashboard />} />
-          <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
-
-          {/* Admin pages with sidebar */}
+          {/* Admin pages with sidebar (includes dashboard routes) */}
           <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<WelcomeScreen />} />
+            <Route path="/Executive" element={<ExecutiveOverview />} />
             <Route
               path="/dashboard/executive"
               element={<ExecutiveOverview />}
             />
-            <Route path="/dashboard/operational" element={<Dashboard />} />
+            <Route path="/dashboard/operational" element={<Operations />} />
             <Route path="/dashboard/alerts" element={<AlertsTasksScreen />} />
             <Route path="/users" element={<UsersScreen />} />
             <Route path="/quotes/monitor" element={<AdminQuotes />} />
